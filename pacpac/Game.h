@@ -10,6 +10,7 @@
 #include <SFML/Network.hpp>
 
 #include "Menu.h"
+#include "Options.h"
 
 /**
 	enum defining states which the whole program can be in
@@ -21,7 +22,10 @@ enum class State
 	INGAME
 };
 
-class Game : public Menu
+//class options inherits class menu
+//so
+//class game inherits class options and menu (within options)
+class Game : public Options
 {
 	//the game window
 	sf::RenderWindow* window;
@@ -43,6 +47,7 @@ public:
 	void render();
 	void pollEvents();
 	void pollMenuEvents();
+	void pollOptionsEvents();
 };
 
 

@@ -40,7 +40,9 @@ public:
 
 	void setFonts(sf::Text& text, const std::string& input, const float& y);
 	void addOutline(sf::Text& text);
-	void pollMenuEvents(sf::RenderWindow* window);
+	void logoSet();
+
+	void menu_draw(sf::RenderWindow* window);
 };
 
 #endif

@@ -4,6 +4,8 @@
 	-defining all of the options visible in main menu
 	-setting all options as not chosen 
 	-loading logo 
+	-loading options
+	-setting properties for all the displayed stuff
 */
 Menu::Menu()
 {	
@@ -11,20 +13,7 @@ Menu::Menu()
 	this->menustate = menuState::PLAY;
 	
 	//load and set properties of logo
-	if (!logo_texture.loadFromFile("logo.png"))
-	{
-		std::cerr << "Failed to load logo" << std::endl;
-	}
-	else
-	{
-		this->pacman_logo.setTexture(logo_texture);
-	}	
-
-	pacman_logo.setOrigin(logo_texture.getSize().x / 2.0f, logo_texture.getSize().y / 2.0f);
-
-	pacman_logo.setPosition(400, 100);
-	
-	pacman_logo.setScale(0.8, 0.8);
+	logoSet();
 
 	//load and set properties of font
 	if (!font.loadFromFile("menufont.ttf")) 
@@ -61,6 +50,48 @@ void Menu::addOutline(sf::Text& text)
 {
 	text.setOutlineThickness(3.0f);
 	text.setOutlineColor(sf::Color::Red);
+}
+
+//load and set properties of logo
+void Menu::logoSet()
+{	
+	if (!logo_texture.loadFromFile("logo.png"))
+	{
+		std::cerr << "Failed to load logo" << std::endl;
+	}
+	else
+	{
+		this->pacman_logo.setTexture(logo_texture);
+	}
+
+	pacman_logo.setOrigin(logo_texture.getSize().x / 2.0f, logo_texture.getSize().y / 2.0f);
+
+	pacman_logo.setPosition(400, 100);
+
+	pacman_logo.setScale(0.8, 0.8);
+}
+
+void Menu::menu_draw(sf::RenderWindow* window)
+{
+	window->draw(pacman_logo);
+	switch (this->menustate)
+	{
+	case menuState::PLAY:
+		window->draw(t_play2);
+		window->draw(t_options);
+		window->draw(t_exit);
+		break;
+	case menuState::OPTIONS:
+		window->draw(t_play);
+		window->draw(t_options2);
+		window->draw(t_exit);
+		break;
+	case menuState::EXIT:
+		window->draw(t_play);
+		window->draw(t_options);
+		window->draw(t_exit2);
+		break;
+	}
 }
 
 
