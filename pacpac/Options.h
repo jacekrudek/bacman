@@ -2,30 +2,42 @@
 #ifndef OPTIONS_H
 #define OPTIONS_H
 
-#include "Menu.h"
+#include "libraries.h"
+
+#include "Menu_utils.h"
 
 enum class optionState {
 	VOLUME,
 	BACK
 };
 
-class Options : public Menu
+class Options 
+	: public Menu_utils
 {
 protected:
-	sf::Font font;
 	sf::Text t_volume;
 	sf::Text t_volume2;
 	sf::Text t_back;
 	sf::Text t_back2;
+	sf::Texture volume_texture;
+	sf::Sprite volume_sprite;
 
+	sf::FloatRect volumeBounds;
 
-	optionState optionstate;
+	optionState* optionstate;
 
 public:
 	Options();
 	~Options();
+
+	optionState getstate();
+	int getvolume();
+	void lowervolume();
+	void topvolume();
+	void setstate(optionState* newstate);
+	void loadVolumeTexture();
 	
-	void options_draw(sf::RenderWindow* window);
+	void draw(sf::RenderWindow* window);
 };
 
 #endif

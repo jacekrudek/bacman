@@ -2,12 +2,7 @@
 #ifndef GAME_H
 #define GAME_H
 
-//sfml libraries
-#include <SFML/Graphics.hpp>
-#include <SFML/System.hpp>
-#include <SFML/Window.hpp>
-#include <SFML/Audio.hpp>
-#include <SFML/Network.hpp>
+#include "libraries.h"
 
 #include "Menu.h"
 #include "Options.h"
@@ -22,20 +17,20 @@ enum class State
 	INGAME
 };
 
-//class options inherits class menu
-//so
-//class game inherits class options and menu (within options)
-class Game : public Options
+
+class Game 
 {
 	//the game window
 	sf::RenderWindow* window;
-	//
 	sf::Event event;
 	sf::VideoMode videoMode;
 
 	State state;
 	void initVar();
 	void initWindow();
+
+	Options options;
+	Menu menu;
 
 public:
 	Game();

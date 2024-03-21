@@ -24,6 +24,7 @@
     <ClCompile Include="Menu.cpp">
       <Filter>Pliki źródłowe</Filter>
     </ClCompile>
+      <Filter>Pliki źródłowe</Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h">

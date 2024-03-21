@@ -1,25 +1,18 @@
 #include "Menu.h"
 
-/*
-	-defining all of the options visible in main menu
-	-setting all options as not chosen 
-	-loading logo 
-	-loading options
-	-setting properties for all the displayed stuff
+/**
+* @brief Constructor for Menu
+*
+* @details
+* Sets default selected menu option on game launch (play)
+* Sets properties of all text displayed in menu using other methods
+*
 */
 Menu::Menu()
-{	
+{
 	//default selected option set as PLAY
-	this->menustate = menuState::PLAY;
-	
-	//load and set properties of logo
-	logoSet();
-
-	//load and set properties of font
-	if (!font.loadFromFile("menufont.ttf")) 
-	{		
-		std::cerr << "Failed to load font" << std::endl;
-	}
+	menustate = new menuState;
+	*menustate = menuState::PLAY;
 
 	//load and set properties of menu options
 	setFonts(t_play, "Play", 300);
@@ -33,48 +26,19 @@ Menu::Menu()
 	addOutline(t_exit2);
 }
 
-//defines all properties of main menu text
-void Menu::setFonts(sf::Text& text, const std::string& input, const float& y)
-{
-	text.setFont(font);
-	text.setString(input);
-	text.setFillColor(sf::Color::Yellow);
-	text.setCharacterSize(80);
-	
-	sf::FloatRect textBounds = text.getLocalBounds();
-	text.setOrigin(textBounds.width / 2.0f, textBounds.height / 2.0f);
-	text.setPosition(400, y);
-}
-
-void Menu::addOutline(sf::Text& text)
-{
-	text.setOutlineThickness(3.0f);
-	text.setOutlineColor(sf::Color::Red);
-}
-
-//load and set properties of logo
-void Menu::logoSet()
-{	
-	if (!logo_texture.loadFromFile("logo.png"))
-	{
-		std::cerr << "Failed to load logo" << std::endl;
-	}
-	else
-	{
-		this->pacman_logo.setTexture(logo_texture);
-	}
-
-	pacman_logo.setOrigin(logo_texture.getSize().x / 2.0f, logo_texture.getSize().y / 2.0f);
-
-	pacman_logo.setPosition(400, 100);
-
-	pacman_logo.setScale(0.8, 0.8);
-}
-
-void Menu::menu_draw(sf::RenderWindow* window)
+/**
+* @brief Draws all objects in program window
+* 
+* @param window Pointer to game window
+* 
+* @details
+* Stuff drawn depends on current menu state
+* 
+*/
+void Menu::draw(sf::RenderWindow* window)
 {
 	window->draw(pacman_logo);
-	switch (this->menustate)
+	switch (*menustate)
 	{
 	case menuState::PLAY:
 		window->draw(t_play2);
@@ -92,15 +56,53 @@ void Menu::menu_draw(sf::RenderWindow* window)
 		window->draw(t_exit2);
 		break;
 	}
+
+	return;
 }
 
+/**
+* @brief Menu state getter
+* 
+* @return Returns pointer to current menu state
+* 
+*/
+menuState Menu::getstate()
+{
+	return *menustate;
+}
 
+/**
+* @brief Menu state setter
+* 
+* @param newstate Pointer to new menu state
+* 
+* @details
+* Sets current state of main menu
+* 
+* @return Doesn't return anything
+* 
+*/
+void Menu::setstate(menuState* newstate)
+{
+	if (menustate != nullptr)
+	{
+		delete menustate;
+	}
+	menustate = newstate;
 
+	return;
+}
 
+/**
+* @brief Default class destroyer
+* 
+*/
 Menu::~Menu()
 {
 
 }
+
+
 
 
 

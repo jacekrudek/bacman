@@ -1,5 +1,14 @@
 #include "Game.h"
 
+/**
+* @brief Initiates default Game class variables 
+* 
+* @details
+* Helps keep everything more organized instead of sticking everything in constructor
+* 
+* @return Doesn't return anything
+* 
+*/
 void Game::initVar()
 {
 	this->window = nullptr;
@@ -7,7 +16,18 @@ void Game::initVar()
 	this->state = State::MENU;
 }
 
-//Window properties
+/**
+* @brief Sets game window properties
+* 
+* @details
+* Properties:
+* - height
+* - width
+* - frame rate limit
+* 
+* @return Doesn't return anything
+* 
+*/
 void Game::initWindow()
 {
 	this->videoMode.height = 1000;
@@ -18,12 +38,26 @@ void Game::initWindow()
 	this->window->setFramerateLimit(75);
 }
 
-//Check if window is open
+/**
+* @brief Checks if window is open
+* 
+* @return Returns YES if window is open, NO if not
+* 
+*/
 const bool Game::getWindow()
 {
 	return this->window->isOpen();
 }
 
+/**
+* @brief Main manager of game update and polling events
+* 
+* @details
+* Updates game by calling certain event-polling functions
+* 
+* @return Doesn't return anything
+* 
+*/
 void Game::update()
 {
 	if (state == State::MENU)
@@ -40,6 +74,15 @@ void Game::update()
 	}
 }
 
+/**
+* @brief Main manager of window objects rendering
+* 
+* @details
+* Renders game elements by calling certain draw functions
+* 
+* @return Doesn't return anything
+* 
+*/
 void Game::render()
 {
 	//Clear current frame
@@ -48,11 +91,11 @@ void Game::render()
 	//Draw ingame objects depending on the games current state
 	if (state == State::MENU)
 	{
-		menu_draw(window);
+		menu.draw(window);
 	}
 	else if (state == State::OPTIONS)
 	{
-		options_draw(window);
+		options.draw(window);
 	}
 	else
 	{
@@ -63,14 +106,28 @@ void Game::render()
 	this->window->display();
 }
 
+/**
+* @brief Event-polling method for in-game state
+* 
+* @return Doesn't return anything
+*/
 void Game::pollEvents()
 {
 	while (this->window->pollEvent(this->event))
 	{
-
+		if (this->event.type == sf::Event::Closed)
+		{
+			window->close();
+		}
 	}
 }
 
+/**
+* @brief Event-polling method for menu state
+* 
+* @return Doesn't return anything
+* 
+*/
 void Game::pollMenuEvents()
 {
 	while (this->window->pollEvent(this->event))
@@ -81,46 +138,55 @@ void Game::pollMenuEvents()
 		}		
 		if (this->event.type == sf::Event::KeyPressed)
 		{
+			menuState* state_ptr;
+			state_ptr = new menuState;
+			
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				if (menustate == menuState::PLAY)
+				if (menu.getstate() == menuState::PLAY)
 				{
-					this->menustate = menuState::EXIT;
+					*state_ptr = menuState::EXIT;
+					menu.setstate(state_ptr);
 				}
-				else if (menustate == menuState::OPTIONS)
+				else if (menu.getstate() == menuState::OPTIONS)
 				{
-					this->menustate = menuState::PLAY;
+					*state_ptr = menuState::PLAY;
+					menu.setstate(state_ptr);
 				}
-				else if (menustate == menuState::EXIT)
+				else if (menu.getstate() == menuState::EXIT)
 				{
-					this->menustate = menuState::OPTIONS;
+					*state_ptr = menuState::OPTIONS;
+					menu.setstate(state_ptr);
 				}
 				break;
 			case sf::Keyboard::Down:
-				if (menustate == menuState::PLAY)
+				if (menu.getstate() == menuState::PLAY)
 				{
-					this->menustate = menuState::OPTIONS;
+					*state_ptr = menuState::OPTIONS;
+					menu.setstate(state_ptr);
 				}
-				else if (menustate == menuState::OPTIONS)
+				else if (menu.getstate() == menuState::OPTIONS)
 				{
-					this->menustate = menuState::EXIT;
+					*state_ptr = menuState::EXIT;
+					menu.setstate(state_ptr);
 				}
-				else if (menustate == menuState::EXIT)
+				else if (menu.getstate() == menuState::EXIT)
 				{
-					this->menustate = menuState::PLAY;
+					*state_ptr = menuState::PLAY;
+					menu.setstate(state_ptr);
 				}
 				break;
 			case sf::Keyboard::Enter:
-				if (menustate == menuState::PLAY)
+				if (menu.getstate() == menuState::PLAY)
 				{
 					this->state = State::INGAME;
 				}
-				else if (menustate == menuState::OPTIONS)
+				else if (menu.getstate() == menuState::OPTIONS)
 				{
 					this->state = State::OPTIONS;
 				}
-				else if (menustate == menuState::EXIT)
+				else if (menu.getstate() == menuState::EXIT)
 				{
 					window->close();
 				}
@@ -132,6 +198,12 @@ void Game::pollMenuEvents()
 	}
 }
 
+/**
+* @brief Event-polling method for options state
+* 
+* @return Doesn't return anything
+* 
+*/
 void Game::pollOptionsEvents()
 {
 	while (this->window->pollEvent(this->event))
@@ -142,32 +214,51 @@ void Game::pollOptionsEvents()
 		}
 		if (this->event.type == sf::Event::KeyPressed)
 		{
+			optionState* state_ptr;
+			state_ptr = new optionState;
+
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				if (optionstate == optionState::VOLUME)
+				if (options.getstate() == optionState::VOLUME)
 				{
-					this->optionstate = optionState::BACK;
+					*state_ptr = optionState::BACK;
+					options.setstate(state_ptr);
 				}
-				else if (optionstate == optionState::BACK)
+				else if (options.getstate() == optionState::BACK)
 				{
-					this->optionstate = optionState::VOLUME;
+					*state_ptr = optionState::VOLUME;
+					options.setstate(state_ptr);
 				}
 				break;
 			case sf::Keyboard::Down:
-				if (optionstate == optionState::VOLUME)
+				if (options.getstate() == optionState::VOLUME)
 				{
-					this->optionstate = optionState::BACK;
+					*state_ptr = optionState::BACK;
+					options.setstate(state_ptr);
 				}
-				else if (optionstate == optionState::BACK)
+				else if (options.getstate() == optionState::BACK)
 				{
-					this->optionstate = optionState::VOLUME;
+					*state_ptr = optionState::VOLUME;
+					options.setstate(state_ptr);
 				}
 				break;
 			case sf::Keyboard::Enter:				
-				if (optionstate == optionState::BACK)
+				if (options.getstate() == optionState::BACK)
 				{
 					this->state = State::MENU;
+				}
+				break;
+			case sf::Keyboard::Left:
+				if (options.getstate() == optionState::VOLUME)
+				{
+					options.lowervolume();
+				}
+				break;
+			case sf::Keyboard::Right:
+				if (options.getstate() == optionState::VOLUME)
+				{
+					options.topvolume();
 				}
 				break;
 			default:
@@ -177,12 +268,23 @@ void Game::pollOptionsEvents()
 	}
 }
 
+/**
+* @brief Game class constructor 
+* 
+* @details
+* Initializes variables and window properties by calling certain functions
+* 
+*/
 Game::Game()
 {
 	this->initVar();
 	this->initWindow();	
 }
 
+/**
+* @brief Default Game class destructor
+* 
+*/
 Game::~Game()
 {
 	delete this->window;
