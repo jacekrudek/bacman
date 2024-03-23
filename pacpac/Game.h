@@ -6,6 +6,8 @@
 
 #include "Menu.h"
 #include "Options.h"
+#include "Map.h"
+#include "Pacman.h"
 
 /**
 	enum defining states which the whole program can be in
@@ -31,6 +33,8 @@ class Game
 
 	Options options;
 	Menu menu;
+	Map mapp;
+	Pacman pacman;
 
 public:
 	Game();

@@ -99,8 +99,12 @@ void Game::render()
 	}
 	else
 	{
-
+		mapp.draw(window);
 	}
+
+	//get mouse position (temporary)
+	sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
+	std::cout << "Mouse Position: " << mousePosition.x << ", " << mousePosition.y << std::endl;
 	
 	//Display objects
 	this->window->display();
@@ -119,6 +123,29 @@ void Game::pollEvents()
 		{
 			window->close();
 		}
+		/*if (this->event.type == sf::Event::KeyPressed)
+		{
+			switch (event.key.code)
+			{
+			case sf::Keyboard::Up:
+				if ()
+				{
+					pacman.move(Direction::UP);
+				}
+				break;
+			case sf::Keyboard::Down:
+
+				break;
+			case sf::Keyboard::Left:
+
+				break;
+			case sf::Keyboard::Right:
+
+				break;
+			default:
+				break;
+			}
+		}*/
 	}
 }
 
