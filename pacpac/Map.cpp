@@ -19,11 +19,15 @@ Map::Map()
 
 	//initialize borders
 	initborders();	
+
+	//testborders();
 }
 
 void Map::draw(sf::RenderWindow* window)
 {
 	window->draw(map_sprite);
+	//window->draw(sprite);
+	pacman.draw(window);
 }
 
 void Map::initborders()
@@ -88,19 +92,343 @@ void Map::initborders()
 	return;
 }
 
+
+
 bool Map::canmove(const Direction& dirr)
 {
-	/*if (dirr == Direction::LEFT)
-	{
-		for (int value : borders[Border::LEFT])
-		{
+	bool pathopen = true;
+	bool found = false;
 
+	if (dirr == Direction::LEFT)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::LEFT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = pacman.getposx() - key.first;
+					if (temp < 30 && temp > 0)
+					{
+						for (const auto& length : key.second)
+						{							
+							if (pacman.getposy() > length.first && pacman.getposy() < length.second)
+							{
+								pathopen = false;
+								found = true;
+							}							
+						}
+					}					
+				}
+			}
 		}
-	}*/
-	return false;
+	}
+	else if (dirr == Direction::RIGHT)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::RIGHT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = key.first - pacman.getposx();
+					if (temp < 30 && temp > 0)
+					{
+						for (const auto& length : key.second)
+						{
+							if (pacman.getposy() > length.first && pacman.getposy() < length.second)
+							{
+								pathopen = false;
+								found = true;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	else if (dirr == Direction::UP)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::TOP)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = pacman.getposy() - key.first;
+					if (temp < 30 && temp > 0)
+					{
+						for (const auto& length : key.second)
+						{
+							if (pacman.getposx() > length.first && pacman.getposx() < length.second)
+							{
+								pathopen = false;
+								found = true;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	else if (dirr == Direction::DOWN)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::BOT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = key.first - pacman.getposy();
+					if (temp < 30 && temp > 0)
+					{
+						for (const auto& length : key.second)
+						{
+							if (pacman.getposx() > length.first && pacman.getposx() < length.second)
+							{
+								pathopen = false;
+								found = true;
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+
+	switch (pathopen)
+	{
+	case true:
+		std::cout << "path open" << std::endl;
+		break;
+	case false:
+		std::cout << "path closed" << std::endl;
+		break;
+	}
+
+	return pathopen;
+}
+
+void Map::setcorrpos(const Direction& dirr, bool& isok)
+{
+	int min_cord = std::numeric_limits<int>::max();
+	int max_cord = 0;
+
+	int min = std::numeric_limits<int>::max();
+	int max = std::numeric_limits<int>::max();
+
+	if (dirr == Direction::LEFT)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::TOP)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = pacman.getposy() - key.first;
+					if (temp < 40 && temp > 0)
+					{
+						min_cord = key.first;
+					}
+				}
+			}
+			else if (bordermap.first == Border::BOT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = key.first - pacman.getposy();
+					if (temp < 40 && temp > 0)
+					{
+						max_cord = key.first;
+					}
+				}
+			}
+		}
+		if (min_cord != std::numeric_limits<int>::max() && max_cord != 0)
+		{
+			float temp = (min_cord + max_cord) / 2;
+			pacman.setposy(temp);
+			isok = true;
+		}
+	}
+	else if (dirr == Direction::RIGHT)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::TOP)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = pacman.getposy() - key.first;
+					if (temp < 40 && temp > 0)
+					{
+						min_cord = key.first;
+					}
+				}
+			}
+			else if (bordermap.first == Border::BOT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = key.first - pacman.getposy();
+					if (temp < 40 && temp > 0)
+					{
+						max_cord = key.first;
+					}
+				}
+			}
+		}
+		if (min_cord != std::numeric_limits<int>::max() && max_cord != 0)
+		{
+			float temp = (min_cord + max_cord) / 2;
+			pacman.setposy(temp);
+			isok = true;
+		}
+	}
+	else if (dirr == Direction::UP)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::RIGHT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = key.first - pacman.getposx();
+					if (temp < 40 && temp > 0)
+					{
+						min_cord = key.first;
+					}
+				}
+			}
+			else if (bordermap.first == Border::LEFT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = pacman.getposx() - key.first;
+					if (temp < 40 && temp > 0)
+					{
+						max_cord = key.first;
+					}
+				}
+			}
+		}
+		if (min_cord != std::numeric_limits<int>::max() && max_cord != 0)
+		{
+			float temp = (min_cord + max_cord) / 2;
+			pacman.setposx(temp);
+			isok = true;
+		}
+	}
+	else if (dirr == Direction::DOWN)
+	{
+		for (const auto& bordermap : borders)
+		{
+			if (bordermap.first == Border::RIGHT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = key.first - pacman.getposx() ;
+					if (temp < 40 && temp > 0)
+					{
+						min_cord = key.first;
+					}
+				}
+			}
+			else if (bordermap.first == Border::LEFT)
+			{
+				for (const auto& key : bordermap.second)
+				{
+					float temp = pacman.getposx() - key.first;
+					if (temp < 40 && temp > 0)
+					{
+						max_cord = key.first;
+					}
+				}
+			}
+		}
+		if (min_cord != std::numeric_limits<int>::max() && max_cord != 0)
+		{
+			float temp = (min_cord + max_cord) / 2;
+			pacman.setposx(temp);
+			isok = true;
+		}
+	}
+
+	return;
+}
+
+void Map::testborders()
+{
+	sf::Image image;
+	image.create(800, 1000, sf::Color::Transparent);
+
+	for (const auto& bordermap : borders)
+	{
+		if (bordermap.first == Border::LEFT || bordermap.first == Border::RIGHT)
+		{
+			for (const auto& key : bordermap.second)
+			{
+				for (const auto& length : key.second)
+				{
+					for (int i = length.first; i < length.second; i++)
+					{
+						image.setPixel(key.first,i,sf::Color::Blue);
+					}
+				}
+			}
+		}
+		else
+		{
+			for (const auto& key : bordermap.second)
+			{
+				for (const auto& length : key.second)
+				{
+					for (int i = length.first; i < length.second; i++)
+					{
+						image.setPixel(i, key.first, sf::Color::Blue);
+					}
+				}
+			}
+		}
+	}
+
+	texture.loadFromImage(image);
+	sprite.setTexture(texture);
+
+	return;
 }
 
 
+
+void Map::movepac(const Direction& dirr)
+{		
+	if (canmove(dirr) == true)
+	{
+		if ((pacman.getdir() == Direction::LEFT && (dirr == Direction::LEFT || dirr == Direction::RIGHT)) ||
+			(pacman.getdir() == Direction::RIGHT && (dirr == Direction::LEFT || dirr == Direction::RIGHT)) ||
+			(pacman.getdir() == Direction::UP && (dirr == Direction::UP || dirr == Direction::DOWN)) ||
+			(pacman.getdir() == Direction::DOWN && (dirr == Direction::UP || dirr == Direction::DOWN)))
+		{
+			pacman.move(dirr);
+		}
+		else
+		{
+			bool isok = false;
+			setcorrpos(dirr, isok);
+			if (isok == true)
+			{
+				pacman.move(dirr);
+			}
+		}
+	}
+
+	return;
+}
+
+Direction Map::getdir()
+{
+	return pacman.getdir();
+}
 
 Map::~Map()
 {

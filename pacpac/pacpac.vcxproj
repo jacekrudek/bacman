@@ -135,11 +135,26 @@
   <ItemGroup>
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="Menu.cpp" />
+    <ClCompile Include="Menu_utils.cpp" />
+    <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="Position.cpp" />
+    <ClCompile Include="Options.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
+    <ClInclude Include="libraries.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="Menu.h" />
+    <ClInclude Include="Menu_utils.h" />
+    <ClInclude Include="Pacman.h" />
+    <ClInclude Include="Position.h" />
+    <ClInclude Include="Options.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="map values helper.txt" />
+    <Text Include="options.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -24,8 +24,13 @@ public:
 
 	void move(const Direction& dirr);
 
+	Direction getdir();
+
 	float getx();
 	float gety();
+	void setx(const float& x);
+	void sety(const float& y);
+
 };
 
 #endif // !Position_H

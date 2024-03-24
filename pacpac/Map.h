@@ -21,8 +21,10 @@ class Map
 
 	std::map<Border, std::map<int, std::vector<std::pair<int, int>>>> borders;
 
-	Position pacposition;
 	Pacman pacman;
+
+	sf::Texture texture;
+	sf::Sprite sprite;
 
 public:
 	Map();
@@ -33,6 +35,14 @@ public:
 	void initborders();
 
 	bool canmove(const Direction& dirr);
+
+	void testborders();
+
+	void movepac(const Direction& dirr);
+
+	Direction getdir();
+
+	void setcorrpos(const Direction& dirr, bool& isok);
 };
 
 #endif // !MAP_H

@@ -70,6 +70,7 @@ void Game::update()
 	}
 	else
 	{
+		mapp.movepac(mapp.getdir());
 		this->pollEvents();
 	}
 }
@@ -123,29 +124,26 @@ void Game::pollEvents()
 		{
 			window->close();
 		}
-		/*if (this->event.type == sf::Event::KeyPressed)
+		if (this->event.type == sf::Event::KeyPressed)
 		{
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				if ()
-				{
-					pacman.move(Direction::UP);
-				}
+				mapp.movepac(Direction::UP);				
 				break;
-			case sf::Keyboard::Down:
-
+			case sf::Keyboard::Down:				
+				mapp.movepac(Direction::DOWN);				
 				break;
-			case sf::Keyboard::Left:
-
+			case sf::Keyboard::Left:				
+				mapp.movepac(Direction::LEFT);				
 				break;
-			case sf::Keyboard::Right:
-
+			case sf::Keyboard::Right:				
+				mapp.movepac(Direction::RIGHT);				
 				break;
 			default:
 				break;
 			}
-		}*/
+		}
 	}
 }
 

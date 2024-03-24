@@ -21,8 +21,12 @@ public:
 
 	void draw(sf::RenderWindow* window);
 
+	Direction getdir();
 	float getposx();
 	float getposy();
+
+	void setposx(const float& x);
+	void setposy(const float& y);
 };
 
 #endif // !PACMAN_H

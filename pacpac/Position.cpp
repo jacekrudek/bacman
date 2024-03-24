@@ -45,6 +45,21 @@ float Position::gety()
 	return ypos;
 }
 
+void Position::setx(const float& x)
+{
+	xpos = x;
+}
+
+void Position::sety(const float& y)
+{
+	ypos = y;
+}
+
+Direction Position::getdir()
+{
+	return dir;
+}
+
 
 
 

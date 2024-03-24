@@ -11,6 +11,7 @@
 #include <sstream>
 #include <map>
 #include <utility>
+#include <limits>
 
 //sfml libraries
 #include <SFML/Graphics.hpp>

@@ -34,7 +34,6 @@ class Game
 	Options options;
 	Menu menu;
 	Map mapp;
-	Pacman pacman;
 
 public:
 	Game();
