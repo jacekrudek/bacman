@@ -70,7 +70,7 @@ void Game::update()
 	}
 	else
 	{
-		mapp.movepac(mapp.getdir());
+		ingame.movepac();
 		this->pollEvents();
 	}
 }
@@ -100,7 +100,7 @@ void Game::render()
 	}
 	else
 	{
-		mapp.draw(window);
+		ingame.draw(window);
 	}
 
 	//get mouse position (temporary)
@@ -129,21 +129,21 @@ void Game::pollEvents()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				mapp.movepac(Direction::UP);				
+				ingame.movepac(Direction::UP);				
 				break;
 			case sf::Keyboard::Down:				
-				mapp.movepac(Direction::DOWN);				
+				ingame.movepac(Direction::DOWN);				
 				break;
 			case sf::Keyboard::Left:				
-				mapp.movepac(Direction::LEFT);				
+				ingame.movepac(Direction::LEFT);				
 				break;
 			case sf::Keyboard::Right:				
-				mapp.movepac(Direction::RIGHT);				
+				ingame.movepac(Direction::RIGHT);				
 				break;
 			default:
 				break;
 			}
-		}
+		}		
 	}
 }
 

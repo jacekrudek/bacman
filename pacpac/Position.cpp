@@ -8,7 +8,7 @@ Position::Position()
 	ypos = 746;
 }
 
-void Position::move(const Direction& dirr)
+void Position::changepos(const Direction& dirr)
 {
 	switch (dirr)
 	{
@@ -35,30 +35,7 @@ void Position::move(const Direction& dirr)
 	return;
 }
 
-float Position::getx()
-{
-	return xpos;
-}
 
-float Position::gety()
-{
-	return ypos;
-}
-
-void Position::setx(const float& x)
-{
-	xpos = x;
-}
-
-void Position::sety(const float& y)
-{
-	ypos = y;
-}
-
-Direction Position::getdir()
-{
-	return dir;
-}
 
 
 

@@ -14,6 +14,7 @@ enum class Direction {
 
 class Position
 {
+protected:
 	Direction dir;
 	float xpos;
 	float ypos;
@@ -22,14 +23,7 @@ public:
 	Position();
 	~Position() {};
 
-	void move(const Direction& dirr);
-
-	Direction getdir();
-
-	float getx();
-	float gety();
-	void setx(const float& x);
-	void sety(const float& y);
+	void changepos(const Direction& dirr);
 
 };
 

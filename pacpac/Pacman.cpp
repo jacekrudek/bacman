@@ -16,14 +16,14 @@ Pacman::Pacman()
 	sf::FloatRect pacBounds = pacman_sprite.getLocalBounds();
 	pacman_sprite.setOrigin(pacBounds.width / 2.0f, pacBounds.height / 2.0f);
 
-	pacman_sprite.setPosition(position.getx(), position.gety());
+	pacman_sprite.setPosition(xpos, ypos);
 }
 
 //TUUUUUUU
 void Pacman::move(const Direction& dirr)
 {
-	position.move(dirr);
-	pacman_sprite.setPosition(position.getx(), position.gety());
+	changepos(dirr);
+	pacman_sprite.setPosition(xpos, ypos);
 
 	return;
 }
@@ -37,28 +37,28 @@ void Pacman::draw(sf::RenderWindow* window)
 
 Direction Pacman::getdir()
 {
-	return position.getdir();
+	return dir;
 }
 
 float Pacman::getposx()
 {
-	return position.getx();
+	return xpos;
 }
 
 float Pacman::getposy()
 {
-	return position.gety();
+	return ypos;
 }
 
 void Pacman::setposx(const float& x)
 {
-	position.setx(x);
+	xpos = x;
 	return;
 }
 
 void Pacman::setposy(const float& y)
 {
-	position.sety(y);
+	ypos = y;
 	return;
 }
 

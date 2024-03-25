@@ -7,11 +7,10 @@
 #include "Position.h"
 
 class Pacman
+	:public Position
 {
 	sf::Texture pacman_texture;
 	sf::Sprite pacman_sprite;
-
-	Position position;
 
 public:
 	Pacman();
