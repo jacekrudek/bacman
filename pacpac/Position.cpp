@@ -4,8 +4,8 @@
 Position::Position()
 {
 	dir = Direction::LEFT;
-	xpos = 407;
-	ypos = 746;
+	xpos = 400;
+	ypos = 750;
 }
 
 void Position::changepos(const Direction& dirr)
@@ -13,19 +13,19 @@ void Position::changepos(const Direction& dirr)
 	switch (dirr)
 	{
 	case Direction::LEFT:
-		xpos--;
+		xpos --;
 		dir = Direction::LEFT;
 		break;
 	case Direction::RIGHT:
-		xpos++;
+		xpos ++;
 		dir = Direction::RIGHT;
 		break;
 	case Direction::UP:
-		ypos--;
+		ypos --;
 		dir = Direction::UP;
 		break;
 	case Direction::DOWN:
-		ypos++;
+		ypos ++;
 		dir = Direction::DOWN;
 		break;
 	default:

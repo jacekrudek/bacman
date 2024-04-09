@@ -26,14 +26,24 @@ class Movement
 
 	Dir_buffer dir_buffer;
 
+
+
 public:
+	sf::Texture texture;
+	sf::Sprite sprite;
+
 	Movement();
 
 	void initborders();
 	bool canmove(Pacman& pacman, const Direction& dirr);
-	void setcorrpos(Pacman& pacman, const Direction& dirr, bool& isok);
+	bool checkcorrpos(Pacman& pacman);
 	void movepac(Pacman& pacman, const Direction& dirr);
+	//void setbuffer(const bool& canmove, Dir_buffer& dir_buffer);
 	//void checkpos();
+
+	void testborders();
+
+	void draw(sf::RenderWindow* window);
 };
 
 #endif // !MOVEMENT_H

@@ -3,9 +3,9 @@
 Pacman::Pacman()
 {
 	//load pac texture
-	if (!pacman_texture.loadFromFile("pacman.png"))
+	if (!pacman_texture.loadFromFile("pacman_otwarty_2.png"))
 	{
-		std::cerr << "Failed to load map" << std::endl;
+		std::cerr << "Failed to load pac" << std::endl;
 	}
 	else
 	{

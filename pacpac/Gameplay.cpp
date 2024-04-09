@@ -13,8 +13,9 @@ void Gameplay::movepac()
 
 void Gameplay::draw(sf::RenderWindow* window)
 {
-	map.draw(window);
+	//map.draw(window);
 	pacman.draw(window);
+	movement.draw(window);
 }
 
 
