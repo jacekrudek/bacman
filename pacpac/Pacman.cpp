@@ -23,6 +23,24 @@ Pacman::Pacman()
 void Pacman::move(const Direction& dirr)
 {
 	changepos(dirr);
+	switch (dir)
+	{
+	case Direction::LEFT:
+		pacman_sprite.setRotation(0.f);
+		pacman_sprite.scale(1, 1);
+	break;
+	case Direction::RIGHT:
+		pacman_sprite.setRotation(180.f);
+	break;
+	case Direction::UP:
+		pacman_sprite.setRotation(90.f);
+	break;
+	case Direction::DOWN:
+		pacman_sprite.setRotation(-90.f);
+	break;
+	default:
+	break;
+	}
 	pacman_sprite.setPosition(xpos, ypos);
 
 	return;

@@ -141,6 +141,7 @@
     <ClCompile Include="Menu_utils.cpp" />
     <ClCompile Include="Movement.cpp" />
     <ClCompile Include="Pacman.cpp" />
+    <ClCompile Include="Particles.cpp" />
     <ClCompile Include="Position.cpp" />
     <ClCompile Include="Options.cpp" />
   </ItemGroup>
@@ -153,6 +154,7 @@
     <ClInclude Include="Menu_utils.h" />
     <ClInclude Include="Movement.h" />
     <ClInclude Include="Pacman.h" />
+    <ClInclude Include="Particles.h" />
     <ClInclude Include="Position.h" />
     <ClInclude Include="Options.h" />
   </ItemGroup>

@@ -70,7 +70,6 @@ void Game::update()
 	}
 	else
 	{
-		ingame.movepac();
 		this->pollEvents();
 	}
 }
@@ -103,9 +102,9 @@ void Game::render()
 		ingame.draw(window);
 	}
 
-	//get mouse position (temporary)
-	sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
-	std::cout << "Mouse Position: " << mousePosition.x << ", " << mousePosition.y << std::endl;
+	////get mouse position (temporary)
+	//sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
+	//std::cout << "Mouse Position: " << mousePosition.x << ", " << mousePosition.y << std::endl;
 	
 	//Display objects
 	this->window->display();
@@ -114,10 +113,15 @@ void Game::render()
 /**
 * @brief Event-polling method for in-game state
 * 
+* @details
+* Calls pacman move function with correct argument list depending on input
+* 
 * @return Doesn't return anything
 */
 void Game::pollEvents()
 {
+	bool moved = false;
+
 	while (this->window->pollEvent(this->event))
 	{
 		if (this->event.type == sf::Event::Closed)
@@ -129,21 +133,29 @@ void Game::pollEvents()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				ingame.movepac(Direction::UP);				
+				ingame.movepac(Direction::UP);	
+				moved = true;
 				break;
 			case sf::Keyboard::Down:				
-				ingame.movepac(Direction::DOWN);				
+				ingame.movepac(Direction::DOWN);	
+				moved = true;
 				break;
 			case sf::Keyboard::Left:				
 				ingame.movepac(Direction::LEFT);				
+				moved = true;
 				break;
 			case sf::Keyboard::Right:				
 				ingame.movepac(Direction::RIGHT);				
+				moved = true;
 				break;
 			default:
 				break;
 			}
 		}		
+	}
+	if (moved == false)
+	{
+		ingame.movepac();
 	}
 }
 

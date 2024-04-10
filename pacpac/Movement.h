@@ -38,8 +38,8 @@ public:
 	bool canmove(Pacman& pacman, const Direction& dirr);
 	bool checkcorrpos(Pacman& pacman);
 	void movepac(Pacman& pacman, const Direction& dirr);
-	//void setbuffer(const bool& canmove, Dir_buffer& dir_buffer);
-	//void checkpos();
+	void findcorrpos(Pacman& pacman, const Direction& dirr, float& min, float& max);
+	bool sameaxis(Pacman& pacman, const Direction& dirr);
 
 	void testborders();
 
