@@ -80,10 +80,12 @@ void Particles::updateparticles(Pacman& pacman)
 			&& position.y < pacposy + 17 && position.y > pacposy - 17)
 		{
 			particle_sprites.erase(particle_sprites.begin() + i);
+			pacman.eat(1);
 		}
 	}
 
 }
+
 
 void Particles::draw(sf::RenderWindow* window)
 {

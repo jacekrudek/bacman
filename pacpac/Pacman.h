@@ -12,6 +12,8 @@ class Pacman
 	sf::Texture pacman_texture;
 	sf::Sprite pacman_sprite;
 
+	int eat_counter;
+	bool eating;
 public:
 	Pacman();
 	~Pacman();
@@ -23,6 +25,8 @@ public:
 	Direction getdir();
 	float getposx();
 	float getposy();
+
+	void eat(const int& state);
 
 	void setposx(const float& x);
 	void setposy(const float& y);

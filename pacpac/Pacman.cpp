@@ -17,11 +17,20 @@ Pacman::Pacman()
 	pacman_sprite.setOrigin(pacBounds.width / 2.0f, pacBounds.height / 2.0f);
 
 	pacman_sprite.setPosition(xpos, ypos);
+
+	eat_counter = 1;
+	eating = false;
 }
 
 //TUUUUUUU
 void Pacman::move(const Direction& dirr)
 {
+	if (eating)
+	{
+		eat_counter++;
+		eat(eat_counter);
+	}	
+
 	changepos(dirr);
 	switch (dir)
 	{
@@ -44,6 +53,51 @@ void Pacman::move(const Direction& dirr)
 	pacman_sprite.setPosition(xpos, ypos);
 
 	return;
+}
+
+void Pacman::eat(const int& state)
+{
+	if (state == 1 || state == 2 )
+	{
+		eating = true;
+		pacman_texture.loadFromFile("pacman_changing_1.png");
+	}
+	else if (state == 3 || state == 4 )
+	{
+		pacman_texture.loadFromFile("pacman_changing_2.png");
+	}
+	else if (state == 5 || state == 6 )
+	{
+		pacman_texture.loadFromFile("pacman_changing_3.png");
+	}
+	else if (state == 7 || state == 8 )
+	{
+		pacman_texture.loadFromFile("pacman_zamkniety_2.png");
+	}
+	else if (state == 9 || state == 10 )
+	{
+		pacman_texture.loadFromFile("pacman_changing_3.png");
+	}
+	else if (state == 11 || state == 12)
+	{
+		pacman_texture.loadFromFile("pacman_changing_2.png");
+	}
+	else if (state == 13 || state == 14)
+	{
+		pacman_texture.loadFromFile("pacman_changing_1.png");
+	}
+	else if (state == 15)
+	{
+		pacman_texture.loadFromFile("pacman_otwarty_2.png");
+		eating = false;
+		eat_counter = 1;
+	}
+
+	sf::FloatRect pacBounds = pacman_sprite.getLocalBounds();
+	pacman_sprite.setOrigin(pacBounds.width / 2.0f, pacBounds.height / 2.0f);
+
+	pacman_sprite.setPosition(xpos, ypos);
+			
 }
 
 void Pacman::draw(sf::RenderWindow* window)
