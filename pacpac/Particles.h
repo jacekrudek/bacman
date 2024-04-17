@@ -22,7 +22,9 @@ public:
 
 	void updateparticles(Pacman& pacman);
 
-	void draw(sf::RenderWindow* window);
+	bool eaten();
+
+	void draw(sf::RenderTarget* window);
 };
 
 #endif // !"PARTICLES_H"

@@ -13,7 +13,7 @@ Pacman::Pacman()
 	}
 
 	//set origin and starting position of pacman
-	sf::FloatRect pacBounds = pacman_sprite.getLocalBounds();
+	pacBounds = pacman_sprite.getLocalBounds();
 	pacman_sprite.setOrigin(pacBounds.width / 2.0f, pacBounds.height / 2.0f);
 
 	pacman_sprite.setPosition(xpos, ypos);
@@ -93,14 +93,14 @@ void Pacman::eat(const int& state)
 		eat_counter = 1;
 	}
 
-	sf::FloatRect pacBounds = pacman_sprite.getLocalBounds();
+	pacBounds = pacman_sprite.getLocalBounds();
 	pacman_sprite.setOrigin(pacBounds.width / 2.0f, pacBounds.height / 2.0f);
 
 	pacman_sprite.setPosition(xpos, ypos);
 			
 }
 
-void Pacman::draw(sf::RenderWindow* window)
+void Pacman::draw(sf::RenderTarget* window)
 {
 	window->draw(pacman_sprite);
 

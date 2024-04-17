@@ -21,7 +21,7 @@ public:
 	Map();
 	~Map();
 
-	void draw(sf::RenderWindow* window);
+	void draw(sf::RenderTarget* window);
 
 	//void initborders();
 

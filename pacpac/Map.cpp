@@ -25,7 +25,7 @@ Map::Map()
 /**
 * @brief Map draw function
 */
-void Map::draw(sf::RenderWindow* window)
+void Map::draw(sf::RenderTarget* window)
 {
 	window->draw(map_sprite);
 }

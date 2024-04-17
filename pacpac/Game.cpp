@@ -14,6 +14,8 @@ void Game::initVar()
 	this->window = nullptr;
 
 	this->state = State::MENU;
+
+	this->ingame = new Gameplay;
 }
 
 /**
@@ -99,12 +101,12 @@ void Game::render()
 	}
 	else
 	{
-		ingame.draw(window);
+		ingame->draw(window);
 	}
 
-	////get mouse position (temporary)
-	//sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
-	//std::cout << "Mouse Position: " << mousePosition.x << ", " << mousePosition.y << std::endl;
+	//get mouse position (temporary)
+	/*sf::Vector2i mousePosition = sf::Mouse::getPosition(*window);
+	std::cout << "Mouse Position: " << mousePosition.x << ", " << mousePosition.y << std::endl;*/
 	
 	//Display objects
 	this->window->display();
@@ -133,29 +135,157 @@ void Game::pollEvents()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				ingame.movepac(Direction::UP);	
-				moved = true;
+				if (ingame->getGstate() == GPstate::PLAYING)
+				{
+					ingame->movepac(Direction::UP);
+					moved = true;
+				}
+				else if (ingame->getGstate() == GPstate::WON)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::SAVE_SCORE:
+						ingame->setPstate(PAUSEDstate::QUIT);
+						break;
+					case PAUSEDstate::QUIT:
+						ingame->setPstate(PAUSEDstate::SAVE_SCORE);
+						break;
+					}
+				}
+				else if (ingame->getGstate() == GPstate::LOST)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::TRY_AGAIN:
+						ingame->setPstate(PAUSEDstate::QUIT);
+						break;
+					case PAUSEDstate::QUIT:
+						ingame->setPstate(PAUSEDstate::TRY_AGAIN);
+						break;
+					}
+				}
+				else if (ingame->getGstate() == GPstate::PAUSED)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::RESUME:
+						ingame->setPstate(PAUSEDstate::QUIT);
+						break;
+					case PAUSEDstate::QUIT:
+						ingame->setPstate(PAUSEDstate::RESUME);
+						break;
+					}
+				}
 				break;
-			case sf::Keyboard::Down:				
-				ingame.movepac(Direction::DOWN);	
-				moved = true;
+			case sf::Keyboard::Down:	
+				if (ingame->getGstate() == GPstate::PLAYING)
+				{
+					ingame->movepac(Direction::DOWN);
+					moved = true;
+				}
+				else if (ingame->getGstate() == GPstate::WON)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::SAVE_SCORE:
+						ingame->setPstate(PAUSEDstate::QUIT);
+						break;
+					case PAUSEDstate::QUIT:
+						ingame->setPstate(PAUSEDstate::SAVE_SCORE);
+						break;
+					}
+				}
+				else if (ingame->getGstate() == GPstate::LOST)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::TRY_AGAIN:
+						ingame->setPstate(PAUSEDstate::QUIT);
+						break;
+					case PAUSEDstate::QUIT:
+						ingame->setPstate(PAUSEDstate::TRY_AGAIN);
+						break;
+					}
+				}
+				else if (ingame->getGstate() == GPstate::PAUSED)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::RESUME:
+						ingame->setPstate(PAUSEDstate::QUIT);
+						break;
+					case PAUSEDstate::QUIT:
+						ingame->setPstate(PAUSEDstate::RESUME);
+						break;
+					}
+				}
 				break;
-			case sf::Keyboard::Left:				
-				ingame.movepac(Direction::LEFT);				
-				moved = true;
+			case sf::Keyboard::Left:	
+				if (ingame->getGstate() == GPstate::PLAYING)
+				{
+					ingame->movepac(Direction::LEFT);
+					moved = true;
+				}
 				break;
-			case sf::Keyboard::Right:				
-				ingame.movepac(Direction::RIGHT);				
-				moved = true;
+			case sf::Keyboard::Right:	
+				if (ingame->getGstate() == GPstate::PLAYING)
+				{
+					ingame->movepac(Direction::RIGHT);
+					moved = true;
+				}
+				break;
+			case sf::Keyboard::Escape:
+				if (ingame->getGstate() == GPstate::PLAYING)
+				{
+					ingame->setGstate(GPstate::PAUSED);
+					ingame->setPstate(PAUSEDstate::RESUME);
+				}
+				break;
+			case sf::Keyboard::Enter:
+				if (ingame->getGstate() == GPstate::PAUSED)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::RESUME:
+						ingame->setGstate(GPstate::PLAYING);
+						break;
+					case PAUSEDstate::QUIT:
+						state = State::MENU;
+						delete this->ingame;
+						ingame = new Gameplay;
+						break;
+					}
+				}
+				else if (ingame->getGstate() == GPstate::LOST)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::TRY_AGAIN:
+						delete this->ingame;
+						ingame = new Gameplay;
+						ingame->setGstate(GPstate::PLAYING);
+						break;
+					case PAUSEDstate::QUIT:
+						state = State::MENU;
+						delete this->ingame;
+						ingame = new Gameplay;
+						break;
+					}
+				}
 				break;
 			default:
 				break;
 			}
 		}		
 	}
-	if (moved == false)
+	if (moved == false && ingame->getGstate() == GPstate::PLAYING)
 	{
-		ingame.movepac();
+		ingame->movepac();
+	}
+	if (ingame->getGstate() == GPstate::PLAYING)
+	{
+		ingame->moveghost();
+		ingame->checkcollision();
 	}
 }
 

@@ -86,8 +86,17 @@ void Particles::updateparticles(Pacman& pacman)
 
 }
 
+bool Particles::eaten()
+{
+	if (particle_sprites.empty())
+	{
+		return true;
+	}
+	return false;
+}
 
-void Particles::draw(sf::RenderWindow* window)
+
+void Particles::draw(sf::RenderTarget* window)
 {
 	for (const auto& sprite : particle_sprites)
 	{

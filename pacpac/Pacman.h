@@ -12,6 +12,9 @@ class Pacman
 	sf::Texture pacman_texture;
 	sf::Sprite pacman_sprite;
 
+	sf::FloatRect pacBounds;
+
+	//for animation
 	int eat_counter;
 	bool eating;
 public:
@@ -20,7 +23,7 @@ public:
 
 	void move(const Direction& dirr);
 
-	void draw(sf::RenderWindow* window);
+	void draw(sf::RenderTarget* window);
 
 	Direction getdir();
 	float getposx();

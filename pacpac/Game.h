@@ -35,7 +35,7 @@ class Game
 	Options options;
 	Menu menu;
 	//Map mapp;
-	Gameplay ingame;
+	Gameplay* ingame;
 
 public:
 	Game();
