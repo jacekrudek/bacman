@@ -8,6 +8,7 @@
 
 enum class menuState {
 	PLAY,
+	LEADERBOARD,
 	OPTIONS,
 	EXIT
 };
@@ -18,19 +19,21 @@ class Menu :
 protected:
 	sf::Text t_play;
 	sf::Text t_play2;
+	sf::Text t_leaderboard;
+	sf::Text t_leaderboard2;
 	sf::Text t_options;
 	sf::Text t_options2;
 	sf::Text t_exit;
 	sf::Text t_exit2;
 
-	menuState* menustate;
+	menuState menustate;
 
 public:
 	Menu();
 	~Menu();
 	
 	menuState getstate();
-	void setstate(menuState* newstate);
+	void setstate(menuState newstate);
 
 	void draw(sf::RenderWindow* window);
 };

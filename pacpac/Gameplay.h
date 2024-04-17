@@ -72,8 +72,6 @@ public:
 
 	void moveghost();
 
-	void lostscreen();
-
 	void checkcollision();
 
 	GPstate getGstate();

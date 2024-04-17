@@ -11,18 +11,20 @@
 Menu::Menu()
 {
 	//default selected option set as PLAY
-	menustate = new menuState;
-	*menustate = menuState::PLAY;
+	menustate = menuState::PLAY;
 
 	//load and set properties of menu options
 	setFonts(t_play, "Play", 300);
 	setFonts(t_play2, "Play", 300);
 	addOutline(t_play2);
-	setFonts(t_options, "Options", 400);
-	setFonts(t_options2, "Options", 400);
+	setFonts(t_leaderboard, "Leaderboard", 400);
+	setFonts(t_leaderboard2, "Leaderboard", 400);
+	addOutline(t_leaderboard2);
+	setFonts(t_options, "Options", 500);
+	setFonts(t_options2, "Options", 500);
 	addOutline(t_options2);
-	setFonts(t_exit, "Exit", 500);
-	setFonts(t_exit2, "Exit", 500);
+	setFonts(t_exit, "Exit", 600);
+	setFonts(t_exit2, "Exit", 600);
 	addOutline(t_exit2);
 }
 
@@ -38,20 +40,29 @@ Menu::Menu()
 void Menu::draw(sf::RenderWindow* window)
 {
 	window->draw(pacman_logo);
-	switch (*menustate)
+	switch (menustate)
 	{
 	case menuState::PLAY:
 		window->draw(t_play2);
+		window->draw(t_leaderboard);
+		window->draw(t_options);
+		window->draw(t_exit);
+		break;
+	case menuState::LEADERBOARD:
+		window->draw(t_play);
+		window->draw(t_leaderboard2);
 		window->draw(t_options);
 		window->draw(t_exit);
 		break;
 	case menuState::OPTIONS:
 		window->draw(t_play);
+		window->draw(t_leaderboard);
 		window->draw(t_options2);
 		window->draw(t_exit);
 		break;
 	case menuState::EXIT:
 		window->draw(t_play);
+		window->draw(t_leaderboard);
 		window->draw(t_options);
 		window->draw(t_exit2);
 		break;
@@ -68,7 +79,7 @@ void Menu::draw(sf::RenderWindow* window)
 */
 menuState Menu::getstate()
 {
-	return *menustate;
+	return menustate;
 }
 
 /**
@@ -82,12 +93,8 @@ menuState Menu::getstate()
 * @return Doesn't return anything
 * 
 */
-void Menu::setstate(menuState* newstate)
+void Menu::setstate(menuState newstate)
 {
-	if (menustate != nullptr)
-	{
-		delete menustate;
-	}
 	menustate = newstate;
 
 	return;
@@ -101,9 +108,3 @@ Menu::~Menu()
 {
 
 }
-
-
-
-
-
-

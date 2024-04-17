@@ -24,7 +24,7 @@ protected:
 
 	sf::FloatRect volumeBounds;
 
-	optionState* optionstate;
+	optionState optionstate;
 
 public:
 	Options();
@@ -34,7 +34,7 @@ public:
 	int getvolume();
 	void lowervolume();
 	void topvolume();
-	void setstate(optionState* newstate);
+	void setstate(optionState newstate);
 	void loadVolumeTexture();
 	
 	void draw(sf::RenderWindow* window);

@@ -12,8 +12,7 @@
 Options::Options()
 {
 	//default selected option set as volume
-	optionstate = new optionState;
-	*optionstate = optionState::VOLUME;	
+	optionstate = optionState::VOLUME;	
 
 	setFonts(t_volume, "Volume", 300);
 	setFonts(t_volume2, "Volume", 300);
@@ -43,7 +42,7 @@ void Options::draw(sf::RenderWindow* window)
 
 	loadVolumeTexture();
 
-	switch (*optionstate)
+	switch (optionstate)
 	{
 	case optionState::VOLUME:
 		window->draw(t_volume2);
@@ -68,7 +67,7 @@ void Options::draw(sf::RenderWindow* window)
 */
 optionState Options::getstate()
 {
-	return *optionstate;
+	return optionstate;
 }
 
 /**
@@ -157,12 +156,8 @@ void Options::topvolume()
 * @return Doesn't return anything
 *
 */
-void Options::setstate(optionState* newstate)
+void Options::setstate(optionState newstate)
 {
-	if (optionstate != nullptr)
-	{
-		delete optionstate;
-	}
 	optionstate = newstate;
 
 	return;
@@ -179,7 +174,7 @@ void Options::setstate(optionState* newstate)
 */
 void Options::loadVolumeTexture()
 {
-	if (*optionstate == optionState::VOLUME)
+	if (optionstate == optionState::VOLUME)
 	{
 		switch (volume_level)
 		{
@@ -257,7 +252,7 @@ void Options::loadVolumeTexture()
 			break;
 		}
 	}
-	else if (*optionstate == optionState::BACK)
+	else if (optionstate == optionState::BACK)
 	{
 		switch (volume_level)
 		{

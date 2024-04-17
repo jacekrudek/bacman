@@ -66,6 +66,10 @@ void Game::update()
 	{
 		this->pollMenuEvents();
 	}
+	else if (state == State::LEADERBOARD)
+	{
+		this->pollLeaderboardEvents();
+	}
 	else if (state == State::OPTIONS)
 	{
 		this->pollOptionsEvents();
@@ -94,6 +98,10 @@ void Game::render()
 	if (state == State::MENU)
 	{
 		menu.draw(window);
+	}
+	else if (state == State::LEADERBOARD)
+	{
+		leaderboard.draw(window);
 	}
 	else if (state == State::OPTIONS)
 	{
@@ -305,49 +313,53 @@ void Game::pollMenuEvents()
 		}		
 		if (this->event.type == sf::Event::KeyPressed)
 		{
-			menuState* state_ptr;
-			state_ptr = new menuState;
 			
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
 				if (menu.getstate() == menuState::PLAY)
 				{
-					*state_ptr = menuState::EXIT;
-					menu.setstate(state_ptr);
+					menu.setstate(menuState::EXIT);
+				}
+				else if (menu.getstate() == menuState::LEADERBOARD)
+				{
+					menu.setstate(menuState::PLAY);
 				}
 				else if (menu.getstate() == menuState::OPTIONS)
 				{
-					*state_ptr = menuState::PLAY;
-					menu.setstate(state_ptr);
+					menu.setstate(menuState::LEADERBOARD);
 				}
 				else if (menu.getstate() == menuState::EXIT)
 				{
-					*state_ptr = menuState::OPTIONS;
-					menu.setstate(state_ptr);
+					menu.setstate(menuState::OPTIONS);
 				}
 				break;
 			case sf::Keyboard::Down:
 				if (menu.getstate() == menuState::PLAY)
 				{
-					*state_ptr = menuState::OPTIONS;
-					menu.setstate(state_ptr);
+					menu.setstate(menuState::LEADERBOARD);
+				}
+				else if (menu.getstate() == menuState::LEADERBOARD)
+				{
+					menu.setstate(menuState::OPTIONS);
 				}
 				else if (menu.getstate() == menuState::OPTIONS)
 				{
-					*state_ptr = menuState::EXIT;
-					menu.setstate(state_ptr);
+					menu.setstate(menuState::EXIT);
 				}
 				else if (menu.getstate() == menuState::EXIT)
 				{
-					*state_ptr = menuState::PLAY;
-					menu.setstate(state_ptr);
+					menu.setstate(menuState::PLAY);
 				}
 				break;
 			case sf::Keyboard::Enter:
 				if (menu.getstate() == menuState::PLAY)
 				{
 					this->state = State::INGAME;
+				}
+				else if (menu.getstate() == menuState::LEADERBOARD)
+				{
+					this->state = State::LEADERBOARD;
 				}
 				else if (menu.getstate() == menuState::OPTIONS)
 				{
@@ -381,33 +393,27 @@ void Game::pollOptionsEvents()
 		}
 		if (this->event.type == sf::Event::KeyPressed)
 		{
-			optionState* state_ptr;
-			state_ptr = new optionState;
 
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
 				if (options.getstate() == optionState::VOLUME)
 				{
-					*state_ptr = optionState::BACK;
-					options.setstate(state_ptr);
+					options.setstate(optionState::BACK);
 				}
 				else if (options.getstate() == optionState::BACK)
 				{
-					*state_ptr = optionState::VOLUME;
-					options.setstate(state_ptr);
+					options.setstate(optionState::VOLUME);
 				}
 				break;
 			case sf::Keyboard::Down:
 				if (options.getstate() == optionState::VOLUME)
 				{
-					*state_ptr = optionState::BACK;
-					options.setstate(state_ptr);
+					options.setstate(optionState::BACK);
 				}
 				else if (options.getstate() == optionState::BACK)
 				{
-					*state_ptr = optionState::VOLUME;
-					options.setstate(state_ptr);
+					options.setstate(optionState::VOLUME);
 				}
 				break;
 			case sf::Keyboard::Enter:				
@@ -427,6 +433,31 @@ void Game::pollOptionsEvents()
 				{
 					options.topvolume();
 				}
+				break;
+			case sf::Keyboard::Escape:
+				this->state = State::MENU;
+				break;
+			default:
+				break;
+			}
+		}
+	}
+}
+
+void Game::pollLeaderboardEvents()
+{
+	while (this->window->pollEvent(this->event))
+	{
+		if (this->event.type == sf::Event::Closed)
+		{
+			window->close();
+		}
+		if (this->event.type == sf::Event::KeyPressed)
+		{
+			switch (event.key.code)
+			{
+			case sf::Keyboard::Escape:
+				this->state = State::MENU;
 				break;
 			default:
 				break;

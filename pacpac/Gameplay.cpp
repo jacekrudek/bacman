@@ -187,8 +187,3 @@ GPstate Gameplay::getGstate()
 	return Gstate;
 }
 
-
-
-
-
-

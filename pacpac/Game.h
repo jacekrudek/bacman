@@ -9,6 +9,7 @@
 #include "Map.h"
 #include "Pacman.h"
 #include "Gameplay.h"
+#include "Leaderboard.h"
 
 /**
 	enum defining states which the whole program can be in
@@ -16,6 +17,7 @@
 enum class State
 {
 	MENU,
+	LEADERBOARD,
 	OPTIONS,
 	INGAME
 };
@@ -34,8 +36,8 @@ class Game
 
 	Options options;
 	Menu menu;
-	//Map mapp;
 	Gameplay* ingame;
+	Leaderboard leaderboard;
 
 public:
 	Game();
@@ -48,6 +50,7 @@ public:
 	void pollEvents();
 	void pollMenuEvents();
 	void pollOptionsEvents();
+	void pollLeaderboardEvents();
 };
 
 

@@ -22,10 +22,6 @@ public:
 	~Map();
 
 	void draw(sf::RenderTarget* window);
-
-	//void initborders();
-
-	//void testborders();
 };
 
 #endif // !MAP_H
