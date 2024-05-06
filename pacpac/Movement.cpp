@@ -204,7 +204,7 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 						for (const auto& length : key.second)
 						{
 							//check if there is a border in pacmans way
-							if (pacposy > length.first && pacposy < length.second)
+							if (pacposy >= length.first && pacposy <= length.second)
 							{
 								pathopen = false;
 							}
@@ -238,7 +238,7 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 					{
 						for (const auto& length : key.second)
 						{
-							if (pacposy > length.first && pacposy < length.second)
+							if (pacposy >= length.first && pacposy <= length.second)
 							{
 								pathopen = false;
 							}
@@ -267,7 +267,7 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 					{
 						for (const auto& length : key.second)
 						{
-							if (pacposx > length.first && pacposx < length.second)
+							if (pacposx >= length.first && pacposx <= length.second)
 							{
 								pathopen = false;
 							}
@@ -296,7 +296,7 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 					{
 						for (const auto& length : key.second)
 						{	
-							if (pacposx > length.first && pacposx < length.second)
+							if (pacposx >= length.first && pacposx <= length.second)
 							{
 								pathopen = false;
 							}	
