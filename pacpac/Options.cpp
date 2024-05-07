@@ -14,14 +14,14 @@ Options::Options()
 	//default selected option set as volume
 	optionstate = optionState::VOLUME;	
 
-	setFonts(t_volume, "Volume", 300);
-	setFonts(t_volume2, "Volume", 300);
+	setFonts(t_volume, "Volume", 500);
+	setFonts(t_volume2, "Volume", 500);
 	addOutline(t_volume2);
-	t_volume.setPosition(270, 300);
-	t_volume2.setPosition(270, 300);
+	t_volume.setPosition(270, 400);
+	t_volume2.setPosition(270, 400);
 
-	setFonts(t_back, "Back", 400);
-	setFonts(t_back2, "Back", 400);
+	setFonts(t_back, "Back", 600);
+	setFonts(t_back2, "Back", 600);
 	addOutline(t_back2);	
 
 	//set properties of volume sprite
@@ -92,8 +92,11 @@ void Options::lowervolume()
 		volume_level--;
 	}
 
-	std::ifstream inputFile("options.txt");
-	std::ofstream tempFile("temp.txt");
+	//FILESYSTEM
+	std::filesystem::path filepath(findfile("options.txt"));
+	std::filesystem::path dirpath(filepath.parent_path());
+	std::ifstream inputFile(filepath);
+	std::ofstream tempFile(dirpath / "temp_options.txt");
 
 	if (!tempFile)
 	{
@@ -107,8 +110,9 @@ void Options::lowervolume()
 	inputFile.close();
 	tempFile.close();
 
-	std::remove("options.txt");
-	std::rename("temp.txt", "options.txt");
+	std::filesystem::remove(filepath);
+
+	std::filesystem::rename(dirpath / "temp_options.txt", filepath);
 
 	return;
 }
@@ -124,8 +128,11 @@ void Options::topvolume()
 		volume_level++;
 	}
 
-	std::ifstream inputFile("options.txt");
-	std::ofstream tempFile("temp.txt");
+	//FILESYSTEM
+	std::filesystem::path filepath(findfile("options.txt"));
+	std::filesystem::path dirpath(filepath.parent_path());
+	std::ifstream inputFile(filepath);
+	std::ofstream tempFile(dirpath / "temp_options.txt");
 
 	if (!tempFile)
 	{
@@ -139,8 +146,9 @@ void Options::topvolume()
 	inputFile.close();
 	tempFile.close();
 
-	std::remove("options.txt");
-	std::rename("temp.txt", "options.txt");
+	std::filesystem::remove(filepath);
+
+	std::filesystem::rename(dirpath / "temp_options.txt", filepath);
 
 	return;
 }
@@ -176,10 +184,13 @@ void Options::loadVolumeTexture()
 {
 	if (optionstate == optionState::VOLUME)
 	{
+		//FILESYSTEM
 		switch (volume_level)
 		{
 		case 0:
-			if (!volume_texture.loadFromFile("volume0.png"))
+		{
+			std::string file(findfile("volume0.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -188,8 +199,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 1:
-			if (!volume_texture.loadFromFile("volume1.png"))
+		{
+			std::string file(findfile("volume1.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -198,8 +212,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 2:
-			if (!volume_texture.loadFromFile("volume2.png"))
+		{
+			std::string file(findfile("volume2.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -208,8 +225,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 3:
-			if (!volume_texture.loadFromFile("volume3.png"))
+		{
+			std::string file(findfile("volume3.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -218,8 +238,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 4:
-			if (!volume_texture.loadFromFile("volume4.png"))
+		{
+			std::string file(findfile("volume4.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -228,8 +251,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 5:
-			if (!volume_texture.loadFromFile("volume5.png"))
+		{
+			std::string file(findfile("volume5.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -238,8 +264,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 6:
-			if (!volume_texture.loadFromFile("volume6.png"))
+		{
+			std::string file(findfile("volume6.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -248,6 +277,7 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		default:
 			break;
 		}
@@ -257,7 +287,9 @@ void Options::loadVolumeTexture()
 		switch (volume_level)
 		{
 		case 0:
-			if (!volume_texture.loadFromFile("volume0.png"))
+		{
+			std::string file(findfile("volume0.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -266,8 +298,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 1:
-			if (!volume_texture.loadFromFile("volume11.png"))
+		{
+			std::string file(findfile("volume11.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -276,8 +311,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 2:
-			if (!volume_texture.loadFromFile("volume22.png"))
+		{
+			std::string file(findfile("volume22.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -286,8 +324,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 3:
-			if (!volume_texture.loadFromFile("volume33.png"))
+		{
+			std::string file(findfile("volume33.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -296,8 +337,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 4:
-			if (!volume_texture.loadFromFile("volume44.png"))
+		{
+			std::string file(findfile("volume44.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -306,8 +350,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 5:
-			if (!volume_texture.loadFromFile("volume55.png"))
+		{
+			std::string file(findfile("volume55.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -316,8 +363,11 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		case 6:
-			if (!volume_texture.loadFromFile("volume66.png"))
+		{
+			std::string file(findfile("volume66.png").string());
+			if (!volume_texture.loadFromFile(file))
 			{
 				std::cerr << "Failed to load volume texture" << std::endl;
 			}
@@ -326,6 +376,7 @@ void Options::loadVolumeTexture()
 				this->volume_sprite.setTexture(volume_texture);
 			}
 			break;
+		}
 		default:
 			break;
 		}
@@ -334,7 +385,7 @@ void Options::loadVolumeTexture()
 	sf::FloatRect volumeBounds = volume_sprite.getLocalBounds();
 	volume_sprite.setOrigin(volumeBounds.width / 2.0f, volumeBounds.height / 2.0f);
 
-	volume_sprite.setPosition(570, 327);
+	volume_sprite.setPosition(570, 400);
 }
 
 /**

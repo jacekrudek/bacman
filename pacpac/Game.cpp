@@ -14,8 +14,6 @@ void Game::initVar()
 	this->window = nullptr;
 
 	this->state = State::MENU;
-
-	this->ingame = new Gameplay;
 }
 
 /**
@@ -260,7 +258,6 @@ void Game::pollEvents()
 					case PAUSEDstate::QUIT:
 						state = State::MENU;
 						delete this->ingame;
-						ingame = new Gameplay;
 						break;
 					}
 				}
@@ -276,7 +273,24 @@ void Game::pollEvents()
 					case PAUSEDstate::QUIT:
 						state = State::MENU;
 						delete this->ingame;
-						ingame = new Gameplay;
+						break;
+					}
+				}
+				else if (ingame->getGstate() == GPstate::WON)
+				{
+					switch (ingame->getPstate())
+					{
+					case PAUSEDstate::SAVE_SCORE:
+						ingame->setPstate(PAUSEDstate::SAVING);
+						break;
+					case PAUSEDstate::QUIT:
+						state = State::MENU;
+						delete this->ingame;
+						break;
+					case PAUSEDstate::SAVING:
+						ingame->updateleaderboard(leaderboard);
+						state = State::MENU;
+						delete this->ingame;
 						break;
 					}
 				}
@@ -284,7 +298,23 @@ void Game::pollEvents()
 			default:
 				break;
 			}
-		}		
+		}	
+		else if (event.type == sf::Event::TextEntered)
+		{
+			if (ingame->getPstate() == PAUSEDstate::SAVING)
+			{
+				if (event.text.unicode == '\b' && !ingame->get_input_text().empty())
+				{
+					std::string temp = ingame->get_input_text();
+					temp.erase(temp.size() - 1);
+					ingame->set_input_text(temp);
+				}
+				else if (event.text.unicode < 128 && event.text.unicode != '\r')
+				{
+					ingame->set_input_text(ingame->get_input_text() + static_cast<char>(event.text.unicode));
+				}
+			}
+		}
 	}
 	if (moved == false && ingame->getGstate() == GPstate::PLAYING)
 	{
@@ -355,6 +385,7 @@ void Game::pollMenuEvents()
 			case sf::Keyboard::Enter:
 				if (menu.getstate() == menuState::PLAY)
 				{
+					this->ingame = new Gameplay;
 					this->state = State::INGAME;
 				}
 				else if (menu.getstate() == menuState::LEADERBOARD)

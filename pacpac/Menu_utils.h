@@ -3,8 +3,10 @@
 #define MENUUTILS_H
 
 #include "libraries.h"
+#include "FileManager.h"
 
 class Menu_utils
+	:public FileManager
 {
 protected:
 	sf::Texture logo_texture;

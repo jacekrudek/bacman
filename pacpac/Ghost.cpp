@@ -7,19 +7,19 @@ Ghost::Ghost(const int& index)
 	switch (ghost_index)
 	{
 	case 1:
-		ghost_texture.loadFromFile("ghost_red.png");
+		ghost_texture.loadFromFile("Visuals\\ghost_red.png");
 		this->ghost_sprite.setTexture(ghost_texture);
 		break;
 	case 2:
-		ghost_texture.loadFromFile("ghost_orange.png");
+		ghost_texture.loadFromFile("Visuals\\ghost_orange.png");
 		this->ghost_sprite.setTexture(ghost_texture);
 		break;
 	case 3:
-		ghost_texture.loadFromFile("ghost_cyan.png");
+		ghost_texture.loadFromFile("Visuals\\ghost_cyan.png");
 		this->ghost_sprite.setTexture(ghost_texture);
 		break;
 	case 4:
-		ghost_texture.loadFromFile("ghost_pink.png");
+		ghost_texture.loadFromFile("Visuals\\ghost_pink.png");
 		this->ghost_sprite.setTexture(ghost_texture);
 		break;
 	}

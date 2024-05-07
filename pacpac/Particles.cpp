@@ -25,7 +25,7 @@ Particles::Particles()
 	};
 
 	//load particle sprite
-	if (!part_texture.loadFromFile("particle.png"))
+	if (!part_texture.loadFromFile("Visuals\\particle.png"))
 	{
 		std::cerr << "Failed to load map" << std::endl;
 	}

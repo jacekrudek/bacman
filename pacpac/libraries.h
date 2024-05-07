@@ -12,6 +12,10 @@
 #include <map>
 #include <utility>
 #include <limits>
+#include <ranges>
+#include <filesystem>
+#include <regex>
+#include <iomanip>
 
 //sfml libraries
 #include <SFML/Graphics.hpp>

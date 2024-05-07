@@ -190,16 +190,8 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 				//checking all left-side borders key values (x coordinates)
 				for (const auto& key : bordermap.second)
 				{					
-					float temp = pacposx - key.first;
-
-					//if below statement true- no correct borders will be found, force quit the loop 
-					if (temp < 25)
-					{
-						break;
-					}
-
 					//if found left-side border key which is relevant considering current pacman position
-					if (temp == 25)
+					if (pacposx - key.first == 25)
 					{
 						for (const auto& length : key.second)
 						{
@@ -207,6 +199,7 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 							if (pacposy >= length.first && pacposy <= length.second)
 							{
 								pathopen = false;
+								break;
 							}
 						}
 					}
@@ -229,18 +222,14 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 			{
 				for (const auto& key : bordermap.second)
 				{
-					float temp = key.first - pacposx;
-					if (temp > 25)
-					{
-						break;
-					}
-					if (temp == 25)
+					if (key.first - pacposx == 25)
 					{
 						for (const auto& length : key.second)
 						{
 							if (pacposy >= length.first && pacposy <= length.second)
 							{
 								pathopen = false;
+								break;
 							}
 						}
 					}
@@ -258,18 +247,14 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 			{
 				for (const auto& key : bordermap.second)
 				{
-					float temp = pacposy - key.first;
-					if (temp < 25)
-					{
-						break;
-					}
-					if (temp == 25)
+					if (pacposy - key.first == 25)
 					{
 						for (const auto& length : key.second)
 						{
 							if (pacposx >= length.first && pacposx <= length.second)
 							{
 								pathopen = false;
+								break;
 							}
 						}
 					}
@@ -287,18 +272,14 @@ bool Movement::canmove(Pacman& pacman, const Direction& dirr)
 			{
 				for (const auto& key : bordermap.second)
 				{
-					float temp = key.first - pacposy;	
-					if (temp > 25)
-					{
-						break;
-					}
-					if (temp == 25)
+					if (key.first - pacposy == 25)
 					{
 						for (const auto& length : key.second)
 						{	
 							if (pacposx >= length.first && pacposx <= length.second)
 							{
 								pathopen = false;
+								break;
 							}	
 						}
 					}

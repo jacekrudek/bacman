@@ -9,6 +9,8 @@
 #include "Movement.h"
 #include "Particles.h"
 #include "Ghost.h"
+#include "FileManager.h"
+#include "Leaderboard.h"
 
 /**
 * @brief Main class for managing gameplay
@@ -30,6 +32,7 @@ enum class GPstate
 enum class PAUSEDstate
 {
 	SAVE_SCORE,
+	SAVING,
 	RESUME,
 	TRY_AGAIN,
 	QUIT
@@ -48,6 +51,7 @@ class Gameplay
 	Ghost ghost_4;
 	GPstate Gstate;
 	PAUSEDstate Pstate;
+	//Leaderboard leaderboard;
 
 	sf::Texture pause_shade_texture;
 	sf::Sprite pause_shade_sprite;
@@ -63,7 +67,20 @@ class Gameplay
 	sf::Text quit2;
 	sf::Text try_again;
 	sf::Text try_again2;
+	sf::Text save_score;
+	sf::Text save_score2;
+	sf::Text time_text;
+	sf::Text highscore;
+	sf::Text inputname;
+	sf::Text nickname;
 
+	sf::Clock clock;
+	sf::Time time;
+	sf::Time pausedtime;
+
+	std::string input_text; //for leaderboard name
+
+	bool pausedtimer;
 public:
 	Gameplay();
 
@@ -87,6 +104,12 @@ public:
 	void setFonts(sf::Text& text, const std::string& input, const float& y, const int& charsize);
 
 	void addOutline(sf::Text& text, const sf::Color& color);
+
+	void updateleaderboard(Leaderboard& leaderboard);
+
+	std::string get_input_text();
+
+	void set_input_text(const std::string& input);
 };
 
 #endif

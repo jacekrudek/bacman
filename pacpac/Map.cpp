@@ -6,7 +6,7 @@
 Map::Map()
 {
 	//load map
-	if (!map_texture.loadFromFile("puremap2.png"))
+	if (!map_texture.loadFromFile("Visuals\\puremap2.png"))
 	{
 		std::cerr << "Failed to load map" << std::endl;
 	}

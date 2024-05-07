@@ -15,7 +15,8 @@ Menu_utils::Menu_utils()
 	logoSet();
 
 	//load font
-	if (!font.loadFromFile("menufont.ttf"))
+	std::filesystem::path file(findfile("menufont.TTF"));
+	if (!font.loadFromFile(file.string()))
 	{
 		std::cerr << "Failed to load font" << std::endl;
 	}
@@ -48,7 +49,7 @@ void Menu_utils::setFonts(sf::Text& text, const std::string& input, const float&
 	text.setFont(font);
 	text.setString(input);
 	text.setFillColor(sf::Color::Yellow);
-	text.setCharacterSize(80);
+	text.setCharacterSize(60);
 
 	sf::FloatRect textBounds = text.getLocalBounds();
 	text.setOrigin(textBounds.width / 2.0f, textBounds.height / 2.0f);
@@ -80,7 +81,8 @@ void Menu_utils::addOutline(sf::Text& text)
 */
 void Menu_utils::logoSet()
 {
-	if (!logo_texture.loadFromFile("logo.png"))
+	std::filesystem::path file(findfile("logo.png"));
+	if (!logo_texture.loadFromFile(file.string()))
 	{
 		std::cerr << "Failed to load logo" << std::endl;
 	}
@@ -107,7 +109,9 @@ void Menu_utils::logoSet()
 */
 void Menu_utils::read_options()
 {
-	std::ifstream inputfile("options.txt");
+	//FILESYSTEM
+	std::filesystem::path filepath(findfile("options.txt"));
+	std::ifstream inputfile(filepath.string());
 
 	if (!inputfile)
 	{

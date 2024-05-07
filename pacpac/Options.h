@@ -5,6 +5,7 @@
 #include "libraries.h"
 
 #include "Menu_utils.h"
+#include "FileManager.h"
 
 enum class optionState {
 	VOLUME,
@@ -25,7 +26,6 @@ protected:
 	sf::FloatRect volumeBounds;
 
 	optionState optionstate;
-
 public:
 	Options();
 	~Options();

@@ -39,6 +39,8 @@ class Game
 	Gameplay* ingame;
 	Leaderboard leaderboard;
 
+	std::string input_text;
+
 public:
 	Game();
 	~Game();
