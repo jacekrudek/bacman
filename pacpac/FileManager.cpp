@@ -2,8 +2,8 @@
 
 FileManager::FileManager()
 {
-	visuals = "E:\\GitHub\\bacman\\pacpac\\Visuals";
-	data = "E:\\GitHub\\bacman\\pacpac\\Visuals";
+	visuals = std::filesystem::current_path() / "Visuals";
+	data = std::filesystem::current_path() / "Data";
 }
 
 std::filesystem::path FileManager::findfile(const std::string& name)
@@ -19,11 +19,11 @@ std::filesystem::path FileManager::findfile(const std::string& name)
 	{
 		if (m[0] == ".png" || m[0] == ".TTF")
 		{
-			mainpath = "E:\\GitHub\\bacman\\pacpac\\Visuals";
+			mainpath = std::filesystem::current_path() / "Visuals";
 		}
 		else if (m[0] == ".txt")
 		{
-			mainpath = "E:\\GitHub\\bacman\\pacpac\\Data";
+			mainpath = std::filesystem::current_path() / "Data";
 		}
 	}
 

@@ -1,10 +1,10 @@
-test 2.672
+gosha 62.952
+test 312.672
 sebek 340.000
-masno 412.000
+tttt 412.000
 jajcol 450.000
 sweat 501.000
 Jacek 512.698
 Maci3k 614.000
 Mati32 880.000
 Piotrek 926.000
-Pawel 1063.000
