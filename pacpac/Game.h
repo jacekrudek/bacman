@@ -6,6 +6,7 @@
 
 #include "Menu.h"
 #include "Options.h"
+#include "Menu_utils.h"
 #include "Map.h"
 #include "Pacman.h"
 #include "Gameplay.h"
@@ -34,8 +35,8 @@ class Game
 	void initVar();
 	void initWindow();
 
-	Options options;
-	Menu menu;
+	Menu_utils* options;
+	Menu_utils* menu;
 	Gameplay* ingame;
 	Leaderboard leaderboard;
 

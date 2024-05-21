@@ -12,6 +12,8 @@
 void Game::initVar()
 {
 	this->window = nullptr;
+	this->menu = new Menu;
+	this->options = new Options;
 
 	this->state = State::MENU;
 }
@@ -95,7 +97,8 @@ void Game::render()
 	//Draw ingame objects depending on the games current state
 	if (state == State::MENU)
 	{
-		menu.draw(window);
+		//POLIMORFIZM
+		menu->draw(window);
 	}
 	else if (state == State::LEADERBOARD)
 	{
@@ -103,7 +106,8 @@ void Game::render()
 	}
 	else if (state == State::OPTIONS)
 	{
-		options.draw(window);
+		//POLIMORFIZM
+		options->draw(window);
 	}
 	else
 	{
@@ -335,6 +339,8 @@ void Game::pollEvents()
 */
 void Game::pollMenuEvents()
 {
+	Menu* menu_ptr = dynamic_cast<Menu*>(menu);
+
 	while (this->window->pollEvent(this->event))
 	{
 		if (this->event.type == sf::Event::Closed)
@@ -347,56 +353,56 @@ void Game::pollMenuEvents()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				if (menu.getstate() == menuState::PLAY)
+				if (menu_ptr->getstate() == menuState::PLAY)
 				{
-					menu.setstate(menuState::EXIT);
+					menu_ptr->setstate(menuState::EXIT);
 				}
-				else if (menu.getstate() == menuState::LEADERBOARD)
+				else if (menu_ptr->getstate() == menuState::LEADERBOARD)
 				{
-					menu.setstate(menuState::PLAY);
+					menu_ptr->setstate(menuState::PLAY);
 				}
-				else if (menu.getstate() == menuState::OPTIONS)
+				else if (menu_ptr->getstate() == menuState::OPTIONS)
 				{
-					menu.setstate(menuState::LEADERBOARD);
+					menu_ptr->setstate(menuState::LEADERBOARD);
 				}
-				else if (menu.getstate() == menuState::EXIT)
+				else if (menu_ptr->getstate() == menuState::EXIT)
 				{
-					menu.setstate(menuState::OPTIONS);
+					menu_ptr->setstate(menuState::OPTIONS);
 				}
 				break;
 			case sf::Keyboard::Down:
-				if (menu.getstate() == menuState::PLAY)
+				if (menu_ptr->getstate() == menuState::PLAY)
 				{
-					menu.setstate(menuState::LEADERBOARD);
+					menu_ptr->setstate(menuState::LEADERBOARD);
 				}
-				else if (menu.getstate() == menuState::LEADERBOARD)
+				else if (menu_ptr->getstate() == menuState::LEADERBOARD)
 				{
-					menu.setstate(menuState::OPTIONS);
+					menu_ptr->setstate(menuState::OPTIONS);
 				}
-				else if (menu.getstate() == menuState::OPTIONS)
+				else if (menu_ptr->getstate() == menuState::OPTIONS)
 				{
-					menu.setstate(menuState::EXIT);
+					menu_ptr->setstate(menuState::EXIT);
 				}
-				else if (menu.getstate() == menuState::EXIT)
+				else if (menu_ptr->getstate() == menuState::EXIT)
 				{
-					menu.setstate(menuState::PLAY);
+					menu_ptr->setstate(menuState::PLAY);
 				}
 				break;
 			case sf::Keyboard::Enter:
-				if (menu.getstate() == menuState::PLAY)
+				if (menu_ptr->getstate() == menuState::PLAY)
 				{
 					this->ingame = new Gameplay;
 					this->state = State::INGAME;
 				}
-				else if (menu.getstate() == menuState::LEADERBOARD)
+				else if (menu_ptr->getstate() == menuState::LEADERBOARD)
 				{
 					this->state = State::LEADERBOARD;
 				}
-				else if (menu.getstate() == menuState::OPTIONS)
+				else if (menu_ptr->getstate() == menuState::OPTIONS)
 				{
 					this->state = State::OPTIONS;
 				}
-				else if (menu.getstate() == menuState::EXIT)
+				else if (menu_ptr->getstate() == menuState::EXIT)
 				{
 					window->close();
 				}
@@ -406,6 +412,7 @@ void Game::pollMenuEvents()
 			}
 		}
 	}
+	menu = dynamic_cast<Menu_utils*>(menu_ptr);
 }
 
 /**
@@ -416,6 +423,8 @@ void Game::pollMenuEvents()
 */
 void Game::pollOptionsEvents()
 {
+	Options* options_ptr = dynamic_cast<Options*>(options);
+
 	while (this->window->pollEvent(this->event))
 	{
 		if (this->event.type == sf::Event::Closed)
@@ -428,41 +437,41 @@ void Game::pollOptionsEvents()
 			switch (event.key.code)
 			{
 			case sf::Keyboard::Up:
-				if (options.getstate() == optionState::VOLUME)
+				if (options_ptr->getstate() == optionState::VOLUME)
 				{
-					options.setstate(optionState::BACK);
+					options_ptr->setstate(optionState::BACK);
 				}
-				else if (options.getstate() == optionState::BACK)
+				else if (options_ptr->getstate() == optionState::BACK)
 				{
-					options.setstate(optionState::VOLUME);
+					options_ptr->setstate(optionState::VOLUME);
 				}
 				break;
 			case sf::Keyboard::Down:
-				if (options.getstate() == optionState::VOLUME)
+				if (options_ptr->getstate() == optionState::VOLUME)
 				{
-					options.setstate(optionState::BACK);
+					options_ptr->setstate(optionState::BACK);
 				}
-				else if (options.getstate() == optionState::BACK)
+				else if (options_ptr->getstate() == optionState::BACK)
 				{
-					options.setstate(optionState::VOLUME);
+					options_ptr->setstate(optionState::VOLUME);
 				}
 				break;
 			case sf::Keyboard::Enter:				
-				if (options.getstate() == optionState::BACK)
+				if (options_ptr->getstate() == optionState::BACK)
 				{
 					this->state = State::MENU;
 				}
 				break;
 			case sf::Keyboard::Left:
-				if (options.getstate() == optionState::VOLUME)
+				if (options_ptr->getstate() == optionState::VOLUME)
 				{
-					options.lowervolume();
+					options_ptr->lowervolume();
 				}
 				break;
 			case sf::Keyboard::Right:
-				if (options.getstate() == optionState::VOLUME)
+				if (options_ptr->getstate() == optionState::VOLUME)
 				{
-					options.topvolume();
+					options_ptr->topvolume();
 				}
 				break;
 			case sf::Keyboard::Escape:
@@ -473,6 +482,7 @@ void Game::pollOptionsEvents()
 			}
 		}
 	}
+	options = dynamic_cast<Menu_utils*>(options_ptr);
 }
 
 void Game::pollLeaderboardEvents()
