@@ -17,29 +17,9 @@ Pstate(PAUSEDstate::QUIT)
 	pause_menu_texture.loadFromFile("Visuals\\pausemenu.png");
 	this->pause_menu_sprite.setTexture(pause_menu_texture);
 
-	font.loadFromFile("Visuals\\menufont.TTF");
-	setFonts(y_won, "YOU WIN", 330, 60);
-	addOutline(y_won, bg_color);
-	setFonts(nickname, "NICKNAME", 330, 60);
-	addOutline(nickname, bg_color);
-	setFonts(y_lost, "YOU LOSE", 330, 60);
-	addOutline(y_lost, bg_color);
-	setFonts(paused, "PAUSED", 325, 70);
-	addOutline(paused, bg_color);
-	setFonts(resume, "RESUME", 450.f, 50);
-	setFonts(resume2, "RESUME", 450.f, 50);
-	addOutline(resume2, sf::Color::Red);
-	setFonts(try_again, "TRY AGAIN", 450, 50);
-	setFonts(try_again2, "TRY AGAIN", 450, 50);	
-	addOutline(try_again2, sf::Color::Red);
-	setFonts(save_score, "SAVE SCORE", 450, 50);
-	setFonts(save_score2, "SAVE SCORE", 450, 50);
-	addOutline(save_score2, sf::Color::Red);
-	setFonts(quit, "QUIT", 520.f, 50);
-	setFonts(quit2, "QUIT", 520.f, 50);
-	addOutline(quit2, sf::Color::Red);
-	setFonts(time_text, "QUIT", 50.f, 40);
-	time_text.setPosition(100, 50);
+	font.loadFromFile("Visuals\\menufont.TTF");	
+
+	setAllText();
 
 	std::ifstream infile("Data\\leaderboard.txt");
 	std::string line;
@@ -62,6 +42,7 @@ Pstate(PAUSEDstate::QUIT)
 
 	setFonts(inputname, "", 330, 50);
 	inputname.setPosition(200, 450);
+
 };
 
 
@@ -221,6 +202,35 @@ void Gameplay::setFonts(sf::Text& text, const std::string& input, const float& y
 	sf::FloatRect textBounds = text.getLocalBounds();
 	text.setOrigin(textBounds.width / 2.0f, textBounds.height / 2.0f);
 	text.setPosition(400, y);
+}
+
+void Gameplay::setAllText()
+{
+	const sf::Color bg_color = sf::Color(0, 0, 0, 150);
+	setFonts(y_won, "YOU WIN", 330, 60);
+	addOutline(y_won, bg_color);
+	setFonts(nickname, "NICKNAME", 330, 60);
+	addOutline(nickname, bg_color);
+	setFonts(y_lost, "YOU LOSE", 330, 60);
+	addOutline(y_lost, bg_color);
+	setFonts(paused, "PAUSED", 325, 70);
+	addOutline(paused, bg_color);
+	setFonts(resume, "RESUME", 450.f, 50);
+	setFonts(resume2, "RESUME", 450.f, 50);
+	addOutline(resume2, sf::Color::Red);
+	setFonts(try_again, "TRY AGAIN", 450, 50);
+	setFonts(try_again2, "TRY AGAIN", 450, 50);
+	addOutline(try_again2, sf::Color::Red);
+	setFonts(save_score, "SAVE SCORE", 450, 50);
+	setFonts(save_score2, "SAVE SCORE", 450, 50);
+	addOutline(save_score2, sf::Color::Red);
+	setFonts(quit, "QUIT", 520.f, 50);
+	setFonts(quit2, "QUIT", 520.f, 50);
+	addOutline(quit2, sf::Color::Red);
+	setFonts(time_text, "QUIT", 50.f, 40);
+	time_text.setPosition(100, 50);
+
+	return;
 }
 
 

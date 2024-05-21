@@ -103,6 +103,8 @@ public:
 
 	void setFonts(sf::Text& text, const std::string& input, const float& y, const int& charsize);
 
+	void setAllText();
+
 	void addOutline(sf::Text& text, const sf::Color& color);
 
 	void updateleaderboard(Leaderboard& leaderboard);

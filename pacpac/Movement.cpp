@@ -10,8 +10,9 @@
 */
 Movement::Movement()
 {
-	initborders();
-	initvertexes();
+	//ASYNC
+	std::future<void> bordr = std::async(std::launch::async, &Movement::initborders, this);
+	std::future<void> vrtx = std::async(std::launch::async, &Movement::initvertexes, this);
 
 	dir_buffer.active = false;
 	dir_buffer.cord = 0;
@@ -19,6 +20,8 @@ Movement::Movement()
 	
 	//testborders();
 	//testvertexes();
+	bordr.get();
+	vrtx.get();
 }
 
 /**
