@@ -14,6 +14,7 @@ void Game::initVar()
 	this->window = nullptr;
 	this->menu = new Menu;
 	this->options = new Options;
+	this->home_window = this->menu;
 
 	this->state = State::MENU;
 }
@@ -95,19 +96,14 @@ void Game::render()
 	this->window->clear();
 
 	//Draw ingame objects depending on the games current state
-	if (state == State::MENU)
+	if (state == State::MENU || state == State::OPTIONS)
 	{
 		//POLIMORFIZM
-		menu->draw(window);
+		home_window->draw(window);
 	}
 	else if (state == State::LEADERBOARD)
 	{
 		leaderboard.draw(window);
-	}
-	else if (state == State::OPTIONS)
-	{
-		//POLIMORFIZM
-		options->draw(window);
 	}
 	else
 	{
@@ -401,6 +397,7 @@ void Game::pollMenuEvents()
 				else if (menu_ptr->getstate() == menuState::OPTIONS)
 				{
 					this->state = State::OPTIONS;
+					this->home_window = options;
 				}
 				else if (menu_ptr->getstate() == menuState::EXIT)
 				{
@@ -460,6 +457,7 @@ void Game::pollOptionsEvents()
 				if (options_ptr->getstate() == optionState::BACK)
 				{
 					this->state = State::MENU;
+					this->home_window = this->menu;
 				}
 				break;
 			case sf::Keyboard::Left:
@@ -476,6 +474,7 @@ void Game::pollOptionsEvents()
 				break;
 			case sf::Keyboard::Escape:
 				this->state = State::MENU;
+				this->home_window = this->menu;
 				break;
 			default:
 				break;
@@ -499,6 +498,7 @@ void Game::pollLeaderboardEvents()
 			{
 			case sf::Keyboard::Escape:
 				this->state = State::MENU;
+				this->home_window = this->menu;
 				break;
 			default:
 				break;

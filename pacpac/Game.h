@@ -37,6 +37,7 @@ class Game
 
 	Menu_utils* options;
 	Menu_utils* menu;
+	Menu_utils* home_window;
 	Gameplay* ingame;
 	Leaderboard leaderboard;
 

@@ -78,11 +78,21 @@ class Gameplay
 	sf::Time time;
 	sf::Time pausedtime;
 
-	std::string input_text; //for leaderboard name
-
+	std::atomic<bool> isRunning; // Flag to control the time counting thread
+	std::thread timeThread;
+	std::mutex timeMutex;
+	std::condition_variable cv;
+	sf::Time elapsed_time;
 	bool pausedtimer;
+	bool shouldstop;
+
+	std::string input_text; //for leaderboard name
+	
+
+	void counttimethread();
 public:
 	Gameplay();
+	~Gameplay();
 
 	void movepac(const Direction& dirr);
 	void movepac();

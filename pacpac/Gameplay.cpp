@@ -1,5 +1,28 @@
 #include "Gameplay.h"
 
+//THREADS
+void Gameplay::counttimethread()
+{		
+	while (true) {
+		std::unique_lock<std::mutex> lock(timeMutex);
+		// Wait until the thread is unpaused or should stop
+		cv.wait(lock, [this]() { return !pausedtimer || shouldstop; });
+
+		// Check if the thread should stop
+		if (shouldstop) {
+			break;
+		}
+
+		elapsed_time = clock.getElapsedTime();
+
+		// Execute thread's task here
+
+		lock.unlock();
+		// Continue executing the task
+	}
+	
+}
+
 Gameplay::Gameplay() : ghost_1(1), ghost_2(2), ghost_3(3), ghost_4(4), Gstate(GPstate::PLAYING),
 Pstate(PAUSEDstate::QUIT) 
 {
@@ -7,9 +30,13 @@ Pstate(PAUSEDstate::QUIT)
 	const sf::Color bg_color = sf::Color(0, 0, 0, 150);
 	background.create(800, 1000, bg_color);
 
-	bool pausedtimer = false;
 	pausedtime = sf::Time::Zero;
 	clock.restart();
+	//THREADS
+	isRunning = true;
+	timeThread = std::thread(&Gameplay::counttimethread, this);
+	pausedtimer = false;
+	shouldstop = false;
 
 	pause_shade_texture.loadFromImage(background);
 	pause_shade_sprite.setTexture(pause_shade_texture);
@@ -43,7 +70,17 @@ Pstate(PAUSEDstate::QUIT)
 	setFonts(inputname, "", 330, 50);
 	inputname.setPosition(200, 450);
 
-};
+}
+Gameplay::~Gameplay()
+{
+	shouldstop = true;
+	cv.notify_one();
+	if (timeThread.joinable())
+	{
+		timeThread.join();
+	}
+}
+
 
 
 /**
@@ -100,9 +137,10 @@ void Gameplay::draw(sf::RenderTarget* window)
 	window->draw(time_text);
 	window->draw(highscore);
 
+
 	if (Gstate == GPstate::WON)
 	{		
-		pausedtime = time;
+		pausedtime = elapsed_time;
 		window->draw(pause_shade_sprite);
 		window->draw(pause_menu_sprite);		
 		switch (Pstate)
@@ -145,8 +183,8 @@ void Gameplay::draw(sf::RenderTarget* window)
 	{
 		if (pausedtimer == false)
 		{
-			pausedtime = time;
 			pausedtimer = true;
+			pausedtime += elapsed_time;
 		}		
 		window->draw(pause_shade_sprite);
 		window->draw(pause_menu_sprite);
@@ -169,8 +207,9 @@ void Gameplay::draw(sf::RenderTarget* window)
 		{
 			clock.restart();
 			pausedtimer = false;
+			cv.notify_one();
 		}
-		time = pausedtime + clock.getElapsedTime();
+		time = pausedtime + elapsed_time;
 
 		//time update	
 		std::stringstream ss;
@@ -252,7 +291,12 @@ std::string Gameplay::get_input_text()
 
 void Gameplay::set_input_text(const std::string& input)
 {
-	input_text = input;
+	std::regex expr("\\w{0,8}");
+
+	if (std::regex_match(input, expr))
+	{
+		input_text = input;
+	}
 }
 
 PAUSEDstate Gameplay::getPstate()
