@@ -17,6 +17,15 @@ void Game::initVar()
 	this->home_window = this->menu;
 
 	this->state = State::MENU;
+
+	if (!this->gamemusic.openFromFile("Data\\menumusic.wav"))
+	{
+		std::cout << "cant load music" << std::endl;
+	}
+	if (!this->menusound.openFromFile("Data\\menusound.wav"))
+	{
+		std::cout << "cant load menu sound effect" << std::endl;
+	}
 }
 
 /**
@@ -73,10 +82,42 @@ void Game::update()
 	}
 	else if (state == State::OPTIONS)
 	{
+		Options* options_ptr = dynamic_cast<Options*>(options);
+		switch (options_ptr->getvolume())
+		{
+		case 0:
+			this->menusound.setVolume(0);
+			break;
+		case 1:
+			this->menusound.setVolume(16);
+			break;
+		case 2:
+			this->menusound.setVolume(32);
+			break;
+		case 3:
+			this->menusound.setVolume(48);
+			break;
+		case 4:
+			this->menusound.setVolume(64);
+			break;
+		case 5:
+			this->menusound.setVolume(80);
+			break;
+		case 6:
+			this->menusound.setVolume(100);
+			break;
+		default:
+			break;
+		}
 		this->pollOptionsEvents();
 	}
 	else
 	{
+		if (ingame->getGstate() != GPstate::PLAYING)
+		{
+			gamemusic.pause();
+		}
+
 		this->pollEvents();
 	}
 }
@@ -148,6 +189,8 @@ void Game::pollEvents()
 				}
 				else if (ingame->getGstate() == GPstate::WON)
 				{
+					this->menusound.play();
+
 					switch (ingame->getPstate())
 					{
 					case PAUSEDstate::SAVE_SCORE:
@@ -160,6 +203,8 @@ void Game::pollEvents()
 				}
 				else if (ingame->getGstate() == GPstate::LOST)
 				{
+					this->menusound.play();
+
 					switch (ingame->getPstate())
 					{
 					case PAUSEDstate::TRY_AGAIN:
@@ -172,6 +217,8 @@ void Game::pollEvents()
 				}
 				else if (ingame->getGstate() == GPstate::PAUSED)
 				{
+					this->menusound.play();
+
 					switch (ingame->getPstate())
 					{
 					case PAUSEDstate::RESUME:
@@ -191,6 +238,8 @@ void Game::pollEvents()
 				}
 				else if (ingame->getGstate() == GPstate::WON)
 				{
+					this->menusound.play();
+
 					switch (ingame->getPstate())
 					{
 					case PAUSEDstate::SAVE_SCORE:
@@ -203,6 +252,8 @@ void Game::pollEvents()
 				}
 				else if (ingame->getGstate() == GPstate::LOST)
 				{
+					this->menusound.play();
+
 					switch (ingame->getPstate())
 					{
 					case PAUSEDstate::TRY_AGAIN:
@@ -215,6 +266,8 @@ void Game::pollEvents()
 				}
 				else if (ingame->getGstate() == GPstate::PAUSED)
 				{
+					this->menusound.play();
+
 					switch (ingame->getPstate())
 					{
 					case PAUSEDstate::RESUME:
@@ -243,6 +296,8 @@ void Game::pollEvents()
 			case sf::Keyboard::Escape:
 				if (ingame->getGstate() == GPstate::PLAYING)
 				{
+					this->gamemusic.pause();
+
 					ingame->setGstate(GPstate::PAUSED);
 					ingame->setPstate(PAUSEDstate::RESUME);
 				}
@@ -253,10 +308,12 @@ void Game::pollEvents()
 					switch (ingame->getPstate())
 					{
 					case PAUSEDstate::RESUME:
+						this->gamemusic.play();
 						ingame->setGstate(GPstate::PLAYING);
 						break;
 					case PAUSEDstate::QUIT:
 						state = State::MENU;
+						this->gamemusic.stop();
 						delete this->ingame;
 						break;
 					}
@@ -268,10 +325,13 @@ void Game::pollEvents()
 					case PAUSEDstate::TRY_AGAIN:
 						delete this->ingame;
 						ingame = new Gameplay;
+						this->gamemusic.stop();
+						this->gamemusic.play();
 						ingame->setGstate(GPstate::PLAYING);
 						break;
 					case PAUSEDstate::QUIT:
 						state = State::MENU;
+						this->gamemusic.stop();
 						delete this->ingame;
 						break;
 					}
@@ -285,6 +345,7 @@ void Game::pollEvents()
 						break;
 					case PAUSEDstate::QUIT:
 						state = State::MENU;
+						this->gamemusic.stop();
 						delete this->ingame;
 						break;
 					case PAUSEDstate::SAVING:
@@ -345,10 +406,11 @@ void Game::pollMenuEvents()
 		}		
 		if (this->event.type == sf::Event::KeyPressed)
 		{
-			
+			this->menusound.play();
+
 			switch (event.key.code)
 			{
-			case sf::Keyboard::Up:
+			case sf::Keyboard::Up:				
 				if (menu_ptr->getstate() == menuState::PLAY)
 				{
 					menu_ptr->setstate(menuState::EXIT);
@@ -388,6 +450,7 @@ void Game::pollMenuEvents()
 				if (menu_ptr->getstate() == menuState::PLAY)
 				{
 					this->ingame = new Gameplay;
+					this->gamemusic.play();
 					this->state = State::INGAME;
 				}
 				else if (menu_ptr->getstate() == menuState::LEADERBOARD)
@@ -430,6 +493,8 @@ void Game::pollOptionsEvents()
 		}
 		if (this->event.type == sf::Event::KeyPressed)
 		{
+			this->menusound.play();
+
 
 			switch (event.key.code)
 			{

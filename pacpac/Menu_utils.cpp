@@ -134,7 +134,7 @@ void Menu_utils::read_options()
 		{
 			try
 			{
-				volume_level = std::stoi(value);
+				volume_fromfile = std::stoi(value);
 			}
 			catch (const std::invalid_argument& e)
 			{
@@ -153,8 +153,7 @@ void Menu_utils::read_options()
 */
 void Menu_utils::set_default()
 {
-	volume_level = 3;
-	set_default();
+	volume_fromfile = 3;
 
 	return;
 }

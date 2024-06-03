@@ -13,7 +13,7 @@ protected:
 	sf::Sprite pacman_logo;
 	sf::Font font;
 
-	int volume_level;
+	int volume_fromfile;
 public:
 	Menu_utils();
 	~Menu_utils();

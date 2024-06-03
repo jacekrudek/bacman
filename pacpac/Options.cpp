@@ -26,6 +26,7 @@ Options::Options()
 
 	//set properties of volume sprite
 	loadVolumeTexture();
+	volume_level = volume_fromfile;
 }
 
 /**

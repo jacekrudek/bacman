@@ -43,6 +43,8 @@ class Game
 
 	std::string input_text;
 
+	sf::Music gamemusic;
+	sf::Music menusound;
 public:
 	Game();
 	~Game();
